@@ -2,7 +2,7 @@ import axios from 'axios';
 import { STORAGE_KEYS } from '../constants';
 
 const axiosClient = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://zap-gateway-b9ei3tej.uc.gateway.dev/api',
     headers: {
         'Content-Type': 'application/json',
     },
