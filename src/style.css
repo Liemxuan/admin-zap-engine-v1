@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #2D5CFE;
+  --color-brand-secondary: #F81CFF;
+  --color-brand-accent: #0ea5e9;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+
+    --bg-card: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.7);
+    --border-glass: rgba(255, 255, 255, 0.4);
+
+    --color-brand-primary: #2D5CFE;
+    --color-brand-primary-alpha: rgba(45, 92, 254, 0.3);
+    --color-brand-primary-alpha-soft: rgba(45, 92, 254, 0.05);
+
+    --color-brand-secondary: #F81CFF;
+  }
+
+  .dark {
+    --bg-main: #09090b;
+    --text-main: #fafafa;
+    --text-muted: #a1a1aa;
+    --border-color: #27272a;
+    --bg-card: #18181b;
+    --bg-glass: rgba(0, 0, 0, 0.7);
+    --border-glass: rgba(255, 255, 255, 0.05);
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  .premium-gradient {
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+  }
+
+  .glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    border-radius: 1.5rem;
+  }
+}

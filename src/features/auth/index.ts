@@ -1,0 +1,11 @@
+export { PageLogin } from './pages/PageLogin';
+export { PageRegister } from './pages/PageRegister';
+export { PageForgotPassword } from './pages/PageForgotPassword';
+export { PageResetPassword } from './pages/PageResetPassword';
+export { LoginForm } from './components/LoginForm';
+export { RegisterForm } from './components/RegisterForm';
+export { ForgotPasswordForm } from './components/ForgotPasswordForm';
+export { ResetPasswordForm } from './components/ResetPasswordForm';
+export { default as PageLoginDefault } from './pages/PageLogin';
+export { PageActiveAccount } from './pages/PageActiveAccount';
+export { ActiveAccountForm } from './components/ActiveAccountForm';
