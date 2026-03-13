@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://zap-gateway-b9ei3tej.uc.gateway.dev/api/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
