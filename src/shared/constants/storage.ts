@@ -14,7 +14,7 @@ export const STORAGE_KEYS = {
 
 export const API_ENDPOINTS = {
     AUTH: {
-        LOGIN: 'Authentication/login',
+        LOGIN: 'Auth/login',
         REGISTER: 'Auth/register-merchant',
         FORGOT_PASSWORD: 'Auth/forgot-password',
         RESET_PASSWORD: 'Auth/reset-password',
