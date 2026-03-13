@@ -1,7 +1,7 @@
 import React from 'react';
 import { Building2 } from 'lucide-react';
 import { useLanguage } from '../../../shared/contexts/LanguageContext';
-import { ForgotPasswordForm } from '../components/ForgotPasswordForm';
+import { ForgotPasswordSteps } from '../components/forgot-password/ForgotPasswordSteps';
 import { LanguageSelector } from '../components/LanguageSelector';
 
 export const PageForgotPassword: React.FC = () => {
@@ -46,17 +46,7 @@ export const PageForgotPassword: React.FC = () => {
 
                     {/* Forgot Password Content */}
                     <div className="max-w-[420px] w-full mx-auto">
-                        <div className="mb-10 text-left">
-                            <h2 className="text-3xl font-black text-slate-900 mb-3 tracking-tight">
-                                {t('auth.forgotPassword.title')}
-                            </h2>
-                            <p className="text-slate-500 text-base font-medium">
-                                {t('auth.forgotPassword.subtitle')}
-                            </p>
-                        </div>
-
-                        {/* Forgot Password Form component */}
-                        <ForgotPasswordForm />
+                        <ForgotPasswordSteps />
                     </div>
                 </div>
 

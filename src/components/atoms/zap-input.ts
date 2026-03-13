@@ -117,8 +117,11 @@ export class ZapInput extends HTMLElement {
   }
 
   private handleInput = (e: Event) => {
-    e.stopPropagation(); // Stop native input event from bubbling out to avoid double events in React
+    e.stopPropagation();
     const target = e.target as HTMLInputElement;
+    
+    // Sync to attribute so re-renders don't lose current text
+    this.setAttribute('value', target.value);
     
     // Update internal state
     this.updateContainerValueClass();
@@ -147,7 +150,6 @@ export class ZapInput extends HTMLElement {
     const label = this.getAttribute('label') || '';
     const labelPosition = this.getAttribute('label-position') || 'top';
     const placeholder = this.getAttribute('placeholder') || '';
-    const value = this.getAttribute('value') || '';
     const disabled = this.hasAttribute('disabled');
     const readonly = this.hasAttribute('readonly');
     const required = this.hasAttribute('required');
@@ -156,6 +158,9 @@ export class ZapInput extends HTMLElement {
     const iconStart = this.getAttribute('icon-start');
     const iconEnd = this.getAttribute('icon-end');
     const fullWidth = this.hasAttribute('fullwidth');
+    
+    // Use live input value if available, fallback to attribute
+    const value = this._input ? this._input.value : (this.getAttribute('value') || '');
     const hasValue = !!value;
 
     const isPassword = typeAttr === 'password';

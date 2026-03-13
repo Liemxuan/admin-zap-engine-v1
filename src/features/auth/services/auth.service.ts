@@ -1,5 +1,5 @@
 import axiosClient from '../../../shared/services/axiosClient';
-import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ForgotPasswordResponse, ResetPasswordRequest, ResetPasswordResponse, ActivateRequest, ActivateResponse, ResendOtpResponse, CheckAccountRequest, CheckAccountResponse, VerifyRegistrationOtpRequest, VerifyRegistrationOtpResponse } from '../types/auth.types';
+import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, ForgotPasswordResponse, ResetPasswordRequest, ResetPasswordResponse, ActivateRequest, ActivateResponse, ResendOtpResponse, CheckAccountRequest, CheckAccountResponse, VerifyRegistrationOtpRequest, VerifyRegistrationOtpResponse, VerifyOtpRequest, VerifyOtpResponse } from '../types/auth.types';
 import { API_ENDPOINTS } from '../../../shared/constants';
 
 export const authService = {
@@ -26,5 +26,8 @@ export const authService = {
     },
     verifyRegistrationOtp: (data: VerifyRegistrationOtpRequest): Promise<VerifyRegistrationOtpResponse> => {
         return axiosClient.post(API_ENDPOINTS.AUTH.VERIFY_REGISTRATION_OTP, data);
+    },
+    verifyOtp: (data: VerifyOtpRequest): Promise<VerifyOtpResponse> => {
+        return axiosClient.post(API_ENDPOINTS.AUTH.VERIFY_OTP, data);
     },
 };

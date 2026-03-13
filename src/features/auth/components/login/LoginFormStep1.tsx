@@ -79,7 +79,16 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
             <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.register.contact')}</label>
+                <div className="flex justify-between items-center">
+                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.register.contact')}</label>
+                    <button
+                        type="button"
+                        onClick={() => navigate(`/${language}/forgot-password`)}
+                        className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                        {t('auth.login.forgot')}
+                    </button>
+                </div>
                 <zap-input
                     ref={inputRef}
                     placeholder={t('auth.register.contactPlaceholder')}

@@ -22,6 +22,7 @@ export const API_ENDPOINTS = {
         RESEND_OTP: 'Auth/resend-otp',
         CHECK_ACCOUNT: 'Auth/check-account',
         VERIFY_REGISTRATION_OTP: 'Auth/verify-registration-otp',
+        VERIFY_OTP: 'Auth/verify-otp',
     }
 } as const;
 

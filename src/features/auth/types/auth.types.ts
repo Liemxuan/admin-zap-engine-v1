@@ -60,6 +60,23 @@ export interface ForgotPasswordResponse {
     Message?: string;
     detail?: string;
     Detail?: string;
+    ResetToken?: string;
+    ExpiresIn?: number;
+}
+
+export interface VerifyOtpRequest {
+    ResetToken: string;
+    Otp: string;
+}
+
+export interface VerifyOtpResponse {
+    success?: boolean;
+    Success?: boolean;
+    message?: string;
+    Message?: string;
+    detail?: string;
+    Detail?: string;
+    ConfirmToken?: string;
 }
 export interface ResetPasswordRequest {
     ConfirmToken: string;
