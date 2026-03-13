@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../../../shared/contexts/LanguageContext';
-import { Lock, ShieldCheck } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useLogin } from '../../hooks/useLogin';
 import { STORAGE_KEYS } from '../../../../shared/constants';
 
