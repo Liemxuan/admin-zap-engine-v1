@@ -4,7 +4,7 @@ const mockDiningOptions: DiningOption[] = [
     { id: '1', name: 'Pickup', locationName: 'Main Branch', code: 'PU', type: 'delivery', isDefault: false, status: 'active', createdAt: '2024-01-01' },
     { id: '2', name: 'For here', locationName: 'Main Branch', code: 'FH', type: 'table', isDefault: true, status: 'active', createdAt: '2024-01-02' },
     { id: '3', name: 'Delivery', locationName: 'Main Branch', code: 'DE', type: 'delivery', isDefault: false, status: 'active', createdAt: '2024-01-03' },
-    { id: '4', name: 'Dine-in', locationName: 'Main Branch', code: 'DI', type: 'table', isDefault: false, status: 'active', createdAt: '2024-01-04' },
+    { id: '4', name: 'Take away', locationName: 'Main Branch', code: 'TA', type: 'delivery', isDefault: false, status: 'active', createdAt: '2024-01-04' },
 ];
 
 export const diningOptionService = {
