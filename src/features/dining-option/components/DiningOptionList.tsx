@@ -5,7 +5,7 @@ import { useLanguage } from '../../../shared/contexts/LanguageContext';
 
 export const DiningOptionList: React.FC = () => {
     const { t, isChangingLanguage } = useLanguage();
-    const { diningOptions, total, loading: apiLoading, params, handleSearch, handleFilterChange, handlePageChange } = useDiningOptions({ pageIndex: 1, pageSize: 10 });
+    const { diningOptions, total, loading: apiLoading, params, handleSearch, handlePageChange } = useDiningOptions({ pageIndex: 1, pageSize: 10 });
     const [searchValue, setSearchValue] = React.useState(params.search || '');
 
     React.useEffect(() => {

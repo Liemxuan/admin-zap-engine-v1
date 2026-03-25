@@ -1,14 +1,10 @@
 import type { DiningOption, DiningOptionListParams, PaginatedResult } from '../types';
 
 const mockDiningOptions: DiningOption[] = [
-    { id: '1', name: 'Dine-in Table', locationName: 'Main Branch', code: 'TB', type: 'table', isDefault: true, status: 'active', createdAt: '2024-01-01' },
-    { id: '2', name: 'Delivery Order', locationName: 'Main Branch', code: 'DG', type: 'delivery', isDefault: false, status: 'active', createdAt: '2024-01-02' },
-    { id: '3', name: 'Takeaway Counter', locationName: 'Main Branch', code: 'TC', type: 'table', isDefault: false, status: 'active', createdAt: '2024-01-03' },
-    { id: '4', name: 'Delivery Local', locationName: 'Branch 2', code: 'DL', type: 'delivery', isDefault: true, status: 'active', createdAt: '2024-01-04' },
-    { id: '5', name: 'Dine-in Table', locationName: 'Branch 2', code: 'TB', type: 'table', isDefault: false, status: 'active', createdAt: '2024-01-05' },
-    { id: '6', name: 'Delivery Express', locationName: 'Branch 3', code: 'DG', type: 'delivery', isDefault: true, status: 'active', createdAt: '2024-01-06' },
-    { id: '7', name: 'Dine-in Table', locationName: 'Branch 3', code: 'TB', type: 'table', isDefault: false, status: 'inactive', createdAt: '2024-01-07' },
-    { id: '8', name: 'Takeaway Counter', locationName: 'Branch 2', code: 'TC', type: 'table', isDefault: false, status: 'active', createdAt: '2024-01-08' },
+    { id: '1', name: 'Pickup', locationName: 'Main Branch', code: 'PU', type: 'delivery', isDefault: false, status: 'active', createdAt: '2024-01-01' },
+    { id: '2', name: 'For here', locationName: 'Main Branch', code: 'FH', type: 'table', isDefault: true, status: 'active', createdAt: '2024-01-02' },
+    { id: '3', name: 'Delivery', locationName: 'Main Branch', code: 'DE', type: 'delivery', isDefault: false, status: 'active', createdAt: '2024-01-03' },
+    { id: '4', name: 'Dine-in', locationName: 'Main Branch', code: 'DI', type: 'table', isDefault: false, status: 'active', createdAt: '2024-01-04' },
 ];
 
 export const diningOptionService = {
