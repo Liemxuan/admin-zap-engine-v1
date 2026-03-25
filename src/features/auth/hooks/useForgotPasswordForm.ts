@@ -20,13 +20,13 @@ export const useForgotPasswordForm = () => {
         setError(null);
 
         if (!email) {
-            setError(t('auth.forgotPassword.error_email_required') || 'Email is required');
+            setError(t('auth.forgotPassword_error_email_required') || 'Email is required');
             emailRef.current?.focus();
             return;
         }
 
         if (!validateEmail(email)) {
-            setError(t('auth.register.error_email_invalid') || 'Invalid email format');
+            setError(t('auth.register_error_email_invalid') || 'Invalid email format');
             emailRef.current?.focus();
             return;
         }

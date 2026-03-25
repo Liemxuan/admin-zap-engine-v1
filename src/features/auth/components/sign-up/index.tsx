@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../../hooks/useRegister';
 import { authService } from '../../services/auth.service';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { SocialForm } from '../SocialForm';
+import { PhoneEmailInput } from '../PhoneEmailInput';
 
 export const SignUpForm: React.FC = () => {
     const { t, language } = useLanguage();
@@ -92,7 +94,7 @@ export const SignUpForm: React.FC = () => {
         setLocalError(null);
         const trimmedContact = contact.trim();
         if (!trimmedContact) {
-            setLocalError(t('auth.register.error_email_invalid') || "Vui lòng nhập email hoặc số điện thoại.");
+            setLocalError(t('auth.register_error_email_invalid') || "Vui lòng nhập email hoặc số điện thoại.");
             return false;
         }
 
@@ -100,12 +102,12 @@ export const SignUpForm: React.FC = () => {
         const isEmailInput = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedContact);
 
         if (!isPhoneContact && !isEmailInput) {
-            setLocalError(t('auth.register.error_email_invalid') || "Email hoặc số điện thoại không hợp lệ.");
+            setLocalError(t('auth.register_error_email_invalid') || "Email hoặc số điện thoại không hợp lệ.");
             return false;
         }
 
         if (!agreeTerms) {
-            setLocalError(t('auth.register.error_terms_required') || "Bạn phải đồng ý với điều khoản dịch vụ và chính sách bảo mật.");
+            setLocalError(t('auth.register_error_terms_required') || "Bạn phải đồng ý với điều khoản dịch vụ và chính sách bảo mật.");
             return false;
         }
 
@@ -117,7 +119,7 @@ export const SignUpForm: React.FC = () => {
         setLocalError(null);
         const otpString = otp.join('');
         if (otpString.length < 6) {
-            setLocalError(t('auth.register.error_otp_required') || "Vui lòng nhập đầy đủ mã OTP 6 số."); // Usually OTP step happens after registration or backend integration
+            setLocalError(t('auth.register_error_otp_required') || "Vui lòng nhập đầy đủ mã OTP 6 số."); // Usually OTP step happens after registration or backend integration
             return false;
         }
 
@@ -128,13 +130,13 @@ export const SignUpForm: React.FC = () => {
         setLocalError(null);
         const hasUpper = /[A-Z]/.test(password);
         const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        
+
         if (password.length < 8 || !hasUpper || !hasSpecial) {
-            setLocalError(t('auth.register.error_password_length') || "Mật khẩu phải từ 8 ký tự, bao gồm chữ hoa và ký tự đặc biệt.");
+            setLocalError(t('auth.register_error_password_length') || "Mật khẩu phải từ 8 ký tự, bao gồm chữ hoa và ký tự đặc biệt.");
             return false;
         }
         if (password !== confirmPassword) {
-            setLocalError(t('auth.register.error_password_match') || "Xác nhận mật khẩu không khớp.");
+            setLocalError(t('auth.register_error_password_match') || "Xác nhận mật khẩu không khớp.");
             return false;
         }
         return true;
@@ -143,25 +145,25 @@ export const SignUpForm: React.FC = () => {
     const validateStep4 = () => {
         setLocalError(null);
         if (!firstName.trim()) {
-            setLocalError(t('auth.register.error_firstName_required') || "Vui lòng nhập họ.");
+            setLocalError(t('auth.register_error_firstName_required') || "Vui lòng nhập họ.");
             return false;
         }
         if (!lastName.trim()) {
-            setLocalError(t('auth.register.error_lastName_required') || "Vui lòng nhập tên.");
+            setLocalError(t('auth.register_error_lastName_required') || "Vui lòng nhập tên.");
             return false;
         }
         if (!merchantName.trim()) {
-            setLocalError(t('auth.register.error_merchant_required') || "Vui lòng nhập tên doanh nghiệp.");
+            setLocalError(t('auth.register_error_merchant_required') || "Vui lòng nhập tên doanh nghiệp.");
             return false;
         }
         if (isEmailContact) {
             if (!/^0\d{9}$/.test(phone.trim())) {
-                setLocalError(t('auth.register.error_phone_invalid') || "Vui lòng nhập số điện thoại.");
+                setLocalError(t('auth.register_error_phone_invalid') || "Vui lòng nhập số điện thoại.");
                 return false;
             }
         } else {
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-                setLocalError(t('auth.register.error_email_invalid') || "Vui lòng nhập email hợp lệ.");
+                setLocalError(t('auth.register_error_email_invalid') || "Vui lòng nhập email hợp lệ.");
                 return false;
             }
         }
@@ -190,7 +192,7 @@ export const SignUpForm: React.FC = () => {
                     // But usually it returns 400 or something if we check for registration
                     setShowAccountExistsModal(true);
                 } else {
-                    setLocalError(data?.detail || data?.Detail || data?.message || data?.Message || t('auth.register.error_duplicate_account') || "Email/Số điện thoại này đã được sử dụng. Vui lòng chọn tài khoản khác.");
+                    setLocalError(data?.detail || data?.Detail || data?.message || data?.Message || t('auth.register_error_duplicate_account') || "Email/Số điện thoại này đã được sử dụng. Vui lòng chọn tài khoản khác.");
                 }
             } finally {
                 setIsCheckingAccount(false);
@@ -210,7 +212,7 @@ export const SignUpForm: React.FC = () => {
                 const data = err.response?.data;
                 const errCode = data?.errorCode || data?.ErrorCode;
                 if (errCode === 'error_invalid_otp') {
-                    setLocalError(data?.detail || data?.Detail || t('auth.register.error_otp_invalid') || "Mã xác thực không chính xác.");
+                    setLocalError(data?.detail || data?.Detail || t('auth.register_error_otp_invalid') || "Mã xác thực không chính xác.");
                 } else {
                     setLocalError(data?.detail || data?.Detail || data?.message || data?.Message || "Đã có lỗi xảy ra");
                 }
@@ -239,7 +241,7 @@ export const SignUpForm: React.FC = () => {
         setLocalError(null);
         if (!validateStep4()) return;
         if (!merchantUrl.trim()) {
-            setLocalError(t('auth.register.error_merchant_url_required') || "Vui lòng nhập URL doanh nghiệp.");
+            setLocalError(t('auth.register_error_merchant_url_required') || "Vui lòng nhập URL doanh nghiệp.");
             return;
         }
         try {
@@ -271,12 +273,12 @@ export const SignUpForm: React.FC = () => {
         const hasNumber = /[0-9]/.test(password);
 
         if (password.length < 8 || !hasUpper || !hasSpecial) {
-            return { val: 1, text: t('auth.register.pwdWeak') || 'Yếu', color: 'bg-red-500', textClass: 'text-red-500' };
+            return { val: 1, text: t('auth.register_pwdWeak') || 'Yếu', color: 'bg-red-500', textClass: 'text-red-500' };
         }
         if (hasNumber && password.length >= 10) {
-            return { val: 3, text: t('auth.register.pwdStrong') || 'Mạnh', color: 'bg-green-500', textClass: 'text-green-500' };
+            return { val: 3, text: t('auth.register_pwdStrong') || 'Mạnh', color: 'bg-green-500', textClass: 'text-green-500' };
         }
-        return { val: 2, text: t('auth.register.pwdAverage') || 'Trung bình', color: 'bg-orange-500', textClass: 'text-orange-500' };
+        return { val: 2, text: t('auth.register_pwdAverage') || 'Trung bình', color: 'bg-orange-500', textClass: 'text-orange-500' };
     };
 
     const pwdStrength = getPwdStrength();
@@ -297,20 +299,19 @@ export const SignUpForm: React.FC = () => {
             {step === 1 && (
                 <div className="animate-in fade-in slide-in-from-right-8 duration-500">
                     <div className="mb-8">
-                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register.title')}</h2>
-                        <p className="text-[15px] font-medium text-slate-500 dark:text-slate-400">{t('auth.register.subtitle')}</p>
+                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register_title')}</h2>
+                        <p className="text-[15px] font-medium text-slate-500 dark:text-slate-400">{t('auth.register_subtitle')}</p>
                     </div>
 
                     <div className="space-y-6">
-                        <zap-input
-                            label={t('auth.register.contact')}
-                            placeholder={t('auth.register.contactPlaceholder')}
-                            icon-end="user"
+                        <PhoneEmailInput
+                            label={t('auth.register_contact')}
+                            placeholder={t('auth.register_contactPlaceholder')}
                             value={contact}
-                            fullwidth
-                            onInput={(e: any) => { setContact(e.detail?.value || e.target.value); setLocalError(null); }}
-                        ></zap-input>
-                        
+                            onChange={val => { setContact(val); setLocalError(null); }}
+                            hasError={!!localError}
+                        />
+
                         <div className="flex gap-3 items-start py-1">
                             <input
                                 type="checkbox"
@@ -319,8 +320,8 @@ export const SignUpForm: React.FC = () => {
                                 className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#1d4ed8] focus:ring-[#1d4ed8] cursor-pointer"
                             />
                             <p className="text-[13px] text-slate-600 dark:text-slate-400 font-medium leading-relaxed font-sans">
-                                {t('auth.register.agree1')} <span className="text-[#1d4ed8] dark:text-blue-400 font-bold cursor-pointer hover:underline">{t('auth.register.agreeTerms')}</span> {' '}
-                                {t('auth.register.agree2')} <span className="text-[#1d4ed8] dark:text-blue-400 font-bold cursor-pointer hover:underline">{t('auth.register.agreePolicy')}</span>.
+                                {t('auth.register_agree1')} <span className="text-[#1d4ed8] dark:text-blue-400 font-bold cursor-pointer hover:underline">{t('auth.register_agreeTerms')}</span> {' '}
+                                {t('auth.register_agree2')} <span className="text-[#1d4ed8] dark:text-blue-400 font-bold cursor-pointer hover:underline">{t('auth.register_agreePolicy')}</span>.
                             </p>
                         </div>
 
@@ -330,32 +331,23 @@ export const SignUpForm: React.FC = () => {
                             disabled={isCheckingAccount || !contact.trim() || !agreeTerms}
                             className={`w-full flex items-center justify-center gap-2 bg-[#1d4ed8] hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-lg h-12 transition-colors shadow-sm ${(isCheckingAccount || !contact.trim() || !agreeTerms) ? 'opacity-60 cursor-not-allowed' : ''}`}
                         >
-                            {isCheckingAccount ? `${t('auth.register.continue')}...` : t('auth.register.continue')} {!isCheckingAccount && <ArrowRight className="w-4 h-4 ml-1" />}
+                            {isCheckingAccount ? `${t('auth.register_continue')}...` : t('auth.register_continue')} {!isCheckingAccount && <ArrowRight className="w-4 h-4 ml-1" />}
                         </button>
 
-                        <div className="relative my-8 flex items-center">
-                            <div className="flex-grow border-t border-slate-200/60 dark:border-slate-800"></div>
-                            <span className="flex-shrink-0 px-4 text-[13px] font-medium text-slate-400 dark:text-slate-500">{t('auth.register.orRegisterWith')}</span>
-                            <div className="flex-grow border-t border-slate-200/60 dark:border-slate-800"></div>
+                        <div className="relative flex items-center justify-center py-4">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-slate-100 dark:border-slate-800"></div>
+                            </div>
+                            <span className="relative px-4 bg-white dark:bg-slate-950 text-xs font-bold text-slate-400 dark:text-slate-500">{t('auth.signin_social_login')}</span>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-3">
-                            <button className="flex h-12 items-center justify-center border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-6 h-6" alt="Google" />
-                            </button>
-                            <button className="flex h-12 items-center justify-center border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" className="w-6 h-6" alt="Facebook" />
-                            </button>
-                            <button className="flex h-12 items-center justify-center border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" className="w-[20px] h-[20px] dark:invert" alt="Apple" />
-                            </button>
-                        </div>
+                        <SocialForm />
 
                         <div className="text-center mt-10">
                             <p className="text-[14px] text-slate-500 dark:text-slate-400 font-medium">
-                                {t('auth.signin.signin_prompt')}{' '}
+                                {t('auth.signin_signin_prompt')}{' '}
                                 <a href={`/${language}/login`} onClick={(e) => { e.preventDefault(); navigate(`/${language}/login`); }} className="text-[#1d4ed8] dark:text-blue-400 font-bold hover:underline">
-                                    {t('auth.signin.signin')}
+                                    {t('auth.signin_signin')}
                                 </a>
                             </p>
                         </div>
@@ -366,9 +358,9 @@ export const SignUpForm: React.FC = () => {
             {step === 2 && (
                 <div className="animate-in fade-in slide-in-from-right-8 duration-500">
                     <div className="mb-8">
-                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register.authTitle')}</h2>
+                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register_authTitle')}</h2>
                         <p className="text-[15px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                            {t('auth.register.otpInstruction1')} <span className="text-slate-700 dark:text-slate-300 font-semibold">{contact}</span> {t('auth.register.otpInstruction2')}
+                            {t('auth.register_otpInstruction1')} <span className="text-slate-700 dark:text-slate-300 font-semibold">{contact}</span> {t('auth.register_otpInstruction2')}
                         </p>
                     </div>
 
@@ -388,13 +380,13 @@ export const SignUpForm: React.FC = () => {
                     </div>
 
                     <div className="flex justify-between text-[13px] mb-8 items-center font-medium">
-                        <span className="text-slate-500 dark:text-slate-400">{t('auth.register.notReceiveCode')}</span>
-                        <button 
+                        <span className="text-slate-500 dark:text-slate-400">{t('auth.register_notReceiveCode')}</span>
+                        <button
                             onClick={handleResend}
                             disabled={timer > 0 || isResending}
                             className={`font-semibold transition-colors ${timer > 0 || isResending ? 'text-slate-400 cursor-not-allowed' : 'text-[#1d4ed8] hover:text-blue-800'}`}
                         >
-                            {t('auth.register.resendCode')} {timer > 0 && `(${formatTime(timer)})`}
+                            {t('auth.register_resendCode')} {timer > 0 && `(${formatTime(timer)})`}
                         </button>
                     </div>
 
@@ -404,7 +396,7 @@ export const SignUpForm: React.FC = () => {
                         disabled={isVerifyingOtp || otp.join('').length < 6}
                         className={`w-full flex items-center justify-center bg-[#1d4ed8] hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-lg h-12 transition-colors shadow-sm mb-6 ${(isVerifyingOtp || otp.join('').length < 6) ? 'opacity-60 cursor-not-allowed' : ''}`}
                     >
-                        {isVerifyingOtp ? `${t('auth.register.confirm')}...` : t('auth.register.confirm')}
+                        {isVerifyingOtp ? `${t('auth.register_confirm')}...` : t('auth.register_confirm')}
                     </button>
 
                     <button
@@ -413,7 +405,7 @@ export const SignUpForm: React.FC = () => {
                         className="flex items-center text-[13px] font-bold text-[#1d4ed8] hover:text-blue-800 transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4 mr-1.5" />
-                        {t('auth.register.backToRegister')}
+                        {t('auth.register_backToRegister')}
                     </button>
                 </div>
             )}
@@ -421,16 +413,16 @@ export const SignUpForm: React.FC = () => {
             {step === 3 && (
                 <div className="animate-in fade-in slide-in-from-right-8 duration-500">
                     <div className="mb-8">
-                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register.title')}</h2>
-                        <p className="text-[15px] font-medium text-slate-500 dark:text-slate-400">{t('auth.register.setPassword')}</p>
+                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register_title')}</h2>
+                        <p className="text-[15px] font-medium text-slate-500 dark:text-slate-400">{t('auth.register_setPassword')}</p>
                     </div>
 
                     <div className="space-y-6">
                         <div className="relative">
                             <zap-input
-                                label={t('auth.register.password')}
+                                label={t('auth.register_password')}
                                 type="password"
-                                placeholder={t('auth.register.passwordPlaceholder')}
+                                placeholder={t('auth.register_passwordPlaceholder')}
                                 icon-end="eye"
                                 value={password}
                                 onInput={(e: any) => { setPassword(e.detail?.value || e.target.value); setLocalError(null); }}
@@ -440,7 +432,7 @@ export const SignUpForm: React.FC = () => {
 
                         <div className="-mt-3 mb-2 px-1">
                             <div className="flex justify-between items-center mb-1.5 opacity-90">
-                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{t('auth.register.securityLevel')}</span>
+                                <span className="text-[10px] font-bold text-slate-500 tracking-widest">{t('auth.register_securityLevel')}</span>
                                 <span className={`text-[11px] font-bold ${pwdStrength.textClass}`}>{pwdStrength.text}</span>
                             </div>
                             <div className="flex gap-1.5 w-full h-[3px]">
@@ -449,14 +441,14 @@ export const SignUpForm: React.FC = () => {
                                 <div className={`rounded-full flex-1 ${pwdStrength.val >= 3 ? pwdStrength.color : 'bg-slate-200'}`}></div>
                             </div>
                             <p className="text-[11px] text-slate-400 font-medium mt-2 leading-relaxed">
-                                {t('auth.register.pwdHint')}
+                                {t('auth.register_pwdHint')}
                             </p>
                         </div>
 
                         <zap-input
-                            label={t('auth.register.confirmPassword')}
+                            label={t('auth.register_confirmPassword')}
                             type="password"
-                            placeholder={t('auth.register.confirmPlaceholder')}
+                            placeholder={t('auth.register_confirmPlaceholder')}
                             icon-end="eye"
                             value={confirmPassword}
                             onInput={(e: any) => { setConfirmPassword(e.detail?.value || e.target.value); setLocalError(null); }}
@@ -470,7 +462,7 @@ export const SignUpForm: React.FC = () => {
                             disabled={!password.trim() || !confirmPassword.trim()}
                             className={`w-full flex items-center justify-center bg-[#1d4ed8] hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-lg h-12 transition-colors shadow-sm ${(!password.trim() || !confirmPassword.trim()) ? 'opacity-60 cursor-not-allowed' : ''}`}
                         >
-                            {t('auth.register.continue')}
+                            {t('auth.register_continue')}
                         </button>
 
                         <button
@@ -479,14 +471,14 @@ export const SignUpForm: React.FC = () => {
                             className="flex items-center text-[13px] font-bold text-[#1d4ed8] hover:text-blue-800 transition-colors pt-2"
                         >
                             <ArrowLeft className="w-4 h-4 mr-1.5" />
-                            {t('auth.register.back')}
+                            {t('auth.register_back')}
                         </button>
 
                         <div className="text-center pt-6">
                             <p className="text-[14px] text-slate-500 dark:text-slate-400 font-medium">
-                                {t('auth.signin.signin_prompt')}{' '}
+                                {t('auth.signin_signin_prompt')}{' '}
                                 <a href={`/${language}/login`} onClick={(e) => { e.preventDefault(); navigate(`/${language}/login`); }} className="text-[#1d4ed8] dark:text-blue-400 font-bold hover:underline">
-                                    {t('auth.signin.signin')}
+                                    {t('auth.signin_signin')}
                                 </a>
                             </p>
                         </div>
@@ -497,23 +489,23 @@ export const SignUpForm: React.FC = () => {
             {step === 4 && (
                 <div className="animate-in fade-in slide-in-from-right-8 duration-500">
                     <div className="mb-8">
-                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register.title')}</h2>
-                        <p className="text-[15px] font-medium text-slate-500 dark:text-slate-400">{t('auth.register.completeProfile')}</p>
+                        <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-2 tracking-tight">{t('auth.register_title')}</h2>
+                        <p className="text-[15px] font-medium text-slate-500 dark:text-slate-400">{t('auth.register_completeProfile')}</p>
                     </div>
 
                     <div className="space-y-5">
                         <div className="grid grid-cols-2 gap-4">
                             <zap-input
-                                label={t('auth.register.firstName')}
-                                placeholder={t('auth.register.firstNamePlaceholder')}
+                                label={t('auth.register_firstName')}
+                                placeholder={t('auth.register_firstNamePlaceholder')}
                                 icon-start="user"
                                 value={firstName}
                                 onInput={(e: any) => { setFirstName(e.detail?.value || e.target.value); setLocalError(null); }}
                                 fullwidth
                             ></zap-input>
                             <zap-input
-                                label={t('auth.register.lastName')}
-                                placeholder={t('auth.register.lastNamePlaceholder')}
+                                label={t('auth.register_lastName')}
+                                placeholder={t('auth.register_lastNamePlaceholder')}
                                 icon-start="user"
                                 value={lastName}
                                 onInput={(e: any) => { setLastName(e.detail?.value || e.target.value); setLocalError(null); }}
@@ -522,8 +514,8 @@ export const SignUpForm: React.FC = () => {
                         </div>
 
                         <zap-input
-                            label={t('auth.register.merchantAccount')}
-                            placeholder={t('auth.register.merchantPlaceholder')}
+                            label={t('auth.register_merchantAccount')}
+                            placeholder={t('auth.register_merchantPlaceholder')}
                             icon-start="building-2"
                             value={merchantName}
                             onInput={(e: any) => handleMerchantNameChange(e.detail?.value || e.target.value)}
@@ -531,7 +523,7 @@ export const SignUpForm: React.FC = () => {
                         ></zap-input>
 
                         <div className="space-y-2">
-                            <label className="text-[12px] font-bold text-slate-700 uppercase tracking-tight ml-1">URL:</label>
+                            <label className="text-[12px] font-bold text-slate-700  tracking-tight ml-1">URL:</label>
                             <div className="flex items-center w-full px-4 h-12 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 overflow-hidden shadow-inner translate-y-[-2px]">
                                 <span className="text-slate-400 font-medium select-none">zap.vn/</span>
                                 <span className="text-[#1d4ed8] font-bold truncate">{merchantUrl || '...'}</span>
@@ -541,8 +533,8 @@ export const SignUpForm: React.FC = () => {
                         <div className="pb-2">
                             {isEmailContact ? (
                                 <zap-input
-                                    label={t('auth.register.phoneLabel')}
-                                    placeholder={t('auth.register.phoneLabelPlaceholder')}
+                                    label={t('auth.register_phoneLabel')}
+                                    placeholder={t('auth.register_phoneLabelPlaceholder')}
                                     icon-start="phone"
                                     value={phone}
                                     onInput={(e: any) => { setPhone(e.detail?.value || e.target.value); setLocalError(null); }}
@@ -550,8 +542,8 @@ export const SignUpForm: React.FC = () => {
                                 ></zap-input>
                             ) : (
                                 <zap-input
-                                    label={t('auth.register.email')}
-                                    placeholder={t('auth.register.emailPlaceholder')}
+                                    label={t('auth.register_email')}
+                                    placeholder={t('auth.register_emailPlaceholder')}
                                     icon-start="mail"
                                     value={email}
                                     onInput={(e: any) => { setEmail(e.detail?.value || e.target.value); setLocalError(null); }}
@@ -566,7 +558,7 @@ export const SignUpForm: React.FC = () => {
                             disabled={isLoading || !firstName.trim() || !lastName.trim() || !merchantName.trim() || !merchantUrl.trim() || (isEmailContact ? !phone.trim() : !email.trim())}
                             className={`w-full flex items-center justify-center bg-[#1d4ed8] hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-lg h-12 transition-colors shadow-sm ${(isLoading || !firstName.trim() || !lastName.trim() || !merchantName.trim() || !merchantUrl.trim() || (isEmailContact ? !phone.trim() : !email.trim())) ? 'opacity-60 cursor-not-allowed' : ''}`}
                         >
-                            {isLoading ? `${t('auth.register.submit')}...` : t('auth.register.submit')}
+                            {isLoading ? `${t('auth.register_submit')}...` : t('auth.register_submit')}
                         </button>
 
                         <button
@@ -575,14 +567,14 @@ export const SignUpForm: React.FC = () => {
                             className="flex items-center text-[13px] font-bold text-[#1d4ed8] hover:text-blue-800 transition-colors pt-2"
                         >
                             <ArrowLeft className="w-4 h-4 mr-1.5" />
-                            {t('auth.register.back')}
+                            {t('auth.register_back')}
                         </button>
 
                         <div className="text-center pt-6">
                             <p className="text-[14px] text-slate-500 dark:text-slate-400 font-medium">
-                                {t('auth.signin.signin_prompt')}{' '}
+                                {t('auth.signin_signin_prompt')}{' '}
                                 <a href={`/${language}/login`} onClick={(e) => { e.preventDefault(); navigate(`/${language}/login`); }} className="text-[#1d4ed8] dark:text-blue-400 font-bold hover:underline">
-                                    {t('auth.signin.signin')}
+                                    {t('auth.signin_signin')}
                                 </a>
                             </p>
                         </div>
@@ -591,15 +583,15 @@ export const SignUpForm: React.FC = () => {
             )}
             {/* Modal: Account Exists */}
             {showAccountExistsModal && (
-                <zap-dialog 
-                    id="account-exists-modal" 
-                    title={t('auth.register.accountExistsTitle') || "Tài khoản đã tồn tại"} 
-                    description={t('auth.register.accountExistsDesc') || "Email hoặc số điện thoại này đã được đăng ký trong hệ thống. Bạn có muốn đăng nhập ngay?"}
+                <zap-dialog
+                    id="account-exists-modal"
+                    title={t('auth.register_accountExistsTitle') || "Tài khoản đã tồn tại"}
+                    description={t('auth.register_accountExistsDesc') || "Email hoặc số điện thoại này đã được đăng ký trong hệ thống. Bạn có muốn đăng nhập ngay?"}
                     open=""
                 >
                     <div slot="footer" className="flex gap-3 justify-end w-full">
                         <zap-button label={t('common.cancel')} variant="outlined" onClick={() => setShowAccountExistsModal(false)}></zap-button>
-                        <zap-button label={t('auth.login.title')} variant="contained" onClick={() => navigate(`/${language}/login?email=${encodeURIComponent(contact)}&step=2`)}></zap-button>
+                        <zap-button label={t('auth.login_title')} variant="contained" onClick={() => navigate(`/${language}/login?email=${encodeURIComponent(contact)}&step=2`)}></zap-button>
                     </div>
                 </zap-dialog>
             )}

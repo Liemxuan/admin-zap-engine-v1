@@ -14,7 +14,7 @@ export interface ProductListParams {
     search?: string;
     pageIndex?: number;
     pageSize?: number;
-    category?: string;
+    categories?: string[];
     status?: string;
 }
 

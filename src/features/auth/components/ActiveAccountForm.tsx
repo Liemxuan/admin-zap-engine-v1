@@ -23,19 +23,19 @@ export const ActiveAccountForm: React.FC = () => {
         <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="text-center space-y-2">
                 <p className="text-sm text-slate-500 dark:text-slate-400">
-                    {t('auth.activate.instruction')}
+                    {t('auth.activate_instruction')}
                 </p>
                 <p className="font-semibold text-slate-700 dark:text-slate-300">{email}</p>
             </div>
 
             <zap-input
                 ref={otpRef}
-                label={t('auth.activate.otpLabel')}
+                label={t('auth.activate_otpLabel')}
                 placeholder="000000"
                 value={otp}
                 icon-start="lock"
                 fullwidth
-                helper-text={otp.length > 0 && otp.length < 6 ? t('auth.activate.error_otp_length') : ''}
+                helper-text={otp.length > 0 && otp.length < 6 ? t('auth.activate_error_otp_length') : ''}
                 error={otp.length > 0 && otp.length < 6 ? "" : undefined}
             ></zap-input>
 
@@ -46,16 +46,16 @@ export const ActiveAccountForm: React.FC = () => {
             )}
 
             <zap-button
-                label={isLoading ? t('auth.activate.submit') + "..." : t('auth.activate.submit')}
+                label={isLoading ? t('auth.activate_submit') + "..." : t('auth.activate_submit')}
                 variant="contained"
                 size="large"
                 fullwidth
                 type="submit"
-                onClick={handleSubmit}
-                disabled={isLoading || otp.length !== 6}
+                onClick={(e: any) => handleSubmit(e)}
+                disabled={isLoading || otp.length !== 6 ? true : undefined}
                 loading={isLoading ? "" : undefined}
                 style-override="background: #2b7fff; border-radius: 0.75rem; font-weight: 700; height: 3.5rem; font-size: 1rem;"
-            ></zap-button>
+            />
 
             <div className="text-center pt-2 space-y-4">
                 <button
@@ -64,7 +64,7 @@ export const ActiveAccountForm: React.FC = () => {
                     disabled={isLoading}
                     onClick={handleResend}
                 >
-                    {isLoading ? t('auth.activate.resend') + '...' : t('auth.activate.resend')}
+                    {isLoading ? t('auth.activate_resend') + '...' : t('auth.activate_resend')}
                 </button>
 
                 <a
@@ -73,7 +73,7 @@ export const ActiveAccountForm: React.FC = () => {
                     className="text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center justify-center gap-2"
                 >
                     <i data-lucide="arrow-left" className="w-4 h-4"></i>
-                    {t('auth.forgotPassword.backToLogin')}
+                    {t('auth.forgotPassword_backToLogin')}
                 </a>
             </div>
         </form>

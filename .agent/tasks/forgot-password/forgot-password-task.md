@@ -1,9 +1,9 @@
-# Danh sách nhiệm vụ tính năng Quên mật khẩu
+# Forgot Password Feature Task List
 
-- [x] Định nghĩa `ForgotPasswordRequest` và `ForgotPasswordResponse`.
-- [x] Cấu hình endpoint `Auth/forgot-password` trong constants.
+- [x] Define `ForgotPasswordRequest` and `ForgotPasswordResponse`.
+- [x] Configure `Auth/forgot-password` endpoint in constants.
 - [x] Implement `authService.forgotPassword`.
-- [x] Xây dựng UI `ForgotPasswordForm`.
-- [x] Xây dựng trang `PageForgotPassword`.
-- [x] Tích hợp i18n cho các thông báo.
-- [x] Xử lý phím **Enter** để gửi yêu cầu.
+- [x] Build `ForgotPasswordForm` UI.
+- [x] Build `PageForgotPassword` page.
+- [x] Integrate i18n for all messages.
+- [x] Handle **Enter** key to submit the request.

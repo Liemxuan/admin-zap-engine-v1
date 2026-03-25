@@ -1,16 +1,16 @@
-# Quy định phát triển tính năng Đặt lại mật khẩu (Reset Password)
+# Reset Password Feature Development Rules
 
-## 1. Kiến trúc thư mục (DDD)
+## 1. Folder Architecture (DDD)
 - **Components**: `src/features/auth/components/ResetPasswordForm.tsx`
 - **Pages**: `src/features/auth/pages/PageResetPassword.tsx`
 
-## 2. Quy tắc giao tiếp API
-- Sử dụng `authService.resetPassword`.
-- Method: `POST` (Sử dụng `axiosClient.post`).
+## 2. API Communication Rules
+- Use `authService.resetPassword`.
+- Method: `POST` (use `axiosClient.post`).
 - Body: `{ ConfirmToken, NewPassword, ConfirmPassword }`.
-- Token phải được lấy từ tham số `?token=` trên URL.
+- Token must be extracted from the `?token=` URL parameter.
 
-## 3. Quy tắc giao diện (UI/UX)
-- Ẩn hiện mật khẩu linh hoạt.
-- Tự động chuyển hướng về trang Đăng nhập sau khi đặt lại thành công (delay 3s).
-- Kiểm tra tính khớp nhau của mật khẩu mới trước khi gọi API.
+## 3. UI/UX Rules
+- Toggle password visibility flexibly.
+- Auto-redirect to the Login page after successful reset (3s delay).
+- Validate that the new passwords match before calling the API.

@@ -14,18 +14,11 @@ export const PageCreateProduct: React.FC = () => {
 
     return (
         <MainLayout>
-            <div className="p-6 md:p-12 space-y-8 max-w-5xl mx-auto">
+            <div className="p-6 space-y-4 max-w-5xl mx-auto">
                 {/* Header */}
-                <div className="space-y-2">
-                    <div className="flex items-center space-x-2 text-blue-500 font-bold text-xs uppercase tracking-[0.2em]">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        <span>{t('product.title')}</span>
-                    </div>
-                    <h1 className="text-4xl font-black tracking-tight text-slate-900 leading-tight">
-                        {t('product.add')}
-                    </h1>
+                <div>
+                    <h1 className="text-lg font-bold text-slate-900 whitespace-nowrap">{t('product.add')}</h1>
+                    <p className="text-xs text-slate-500 whitespace-nowrap">{t('product.subtitle')}</p>
                 </div>
 
                 {/* Form Card */}

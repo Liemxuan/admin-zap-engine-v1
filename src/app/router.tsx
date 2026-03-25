@@ -2,6 +2,13 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { PageLogin, PageRegister, PageForgotPassword, PageResetPassword, PageActiveAccount } from '../features/auth';
 import { PageDashboard } from '../features/dashboard';
 import { PageProduct, PageCreateProduct } from '../features/product';
+import { PageCategory } from '../features/category';
+import { PageDiscount } from '../features/discount';
+import { PageModifier } from '../features/modifier';
+import { PageLocation } from '../features/location';
+import { PageCustomer } from '../features/customer';
+import { PageGroup } from '../features/group';
+import { PageDiningOption } from '../features/dining-option';
 import { LanguageGuard } from './LanguageGuard';
 
 /**
@@ -52,6 +59,34 @@ export const router = createBrowserRouter([
                     {
                         path: 'product/create',
                         element: <PageCreateProduct />,
+                    },
+                    {
+                        path: 'category',
+                        element: <PageCategory />,
+                    },
+                    {
+                        path: 'discount',
+                        element: <PageDiscount />,
+                    },
+                    {
+                        path: 'modifier',
+                        element: <PageModifier />,
+                    },
+                    {
+                        path: 'location',
+                        element: <PageLocation />,
+                    },
+                    {
+                        path: 'customer',
+                        element: <PageCustomer />,
+                    },
+                    {
+                        path: 'group',
+                        element: <PageGroup />,
+                    },
+                    {
+                        path: 'dining-option',
+                        element: <PageDiningOption />,
                     },
                 ]
             },

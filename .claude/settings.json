@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(dotnet build)",
+      "Bash(dotnet run)",
+      "Bash(git status)",
+      "Bash(git add *)",
+      "Bash(git diff *)"
+    ],
+    "ask": [
+      "Bash(npm install *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(rm *)",
+      "Bash(del *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets.json)",
+      "Bash(curl *)"
+    ]
+  }
+}

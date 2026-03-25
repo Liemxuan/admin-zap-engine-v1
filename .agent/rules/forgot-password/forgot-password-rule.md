@@ -1,20 +1,20 @@
-# Quy định phát triển tính năng Quên mật khẩu (Forgot Password)
+# Forgot Password Feature Development Rules
 
-Tài liệu này định nghĩa các quy tắc và tiêu chuẩn khi phát triển hoặc chỉnh sửa tính năng Quên mật khẩu.
+This document defines the rules and standards when developing or modifying the Forgot Password feature.
 
-## 1. Kiến trúc thư mục (DDD)
+## 1. Folder Architecture (DDD)
 - **Components**: `src/features/auth/components/ForgotPasswordForm.tsx`
 - **Pages**: `src/features/auth/pages/PageForgotPassword.tsx`
 - **Services**: `src/features/auth/services/auth.service.ts`
 - **Locales**: `src/shared/locales/{lang}/auth.ts`
 
-## 2. Quy tắc giao tiếp API
-- Sử dụng `authService.forgotPassword` để gửi yêu cầu reset.
+## 2. API Communication Rules
+- Use `authService.forgotPassword` to send the reset request.
 - Endpoint: `Auth/forgot-password`.
 - Method: `POST`.
 - Body: `{ Email: string }`.
 
-## 3. Quy tắc giao diện (UI/UX)
-- Sử dụng `<zap-input>` cho trường Email.
-- Hiển thị thông báo hướng dẫn người dùng check email sau khi gửi thành công.
-- Nút "Quay lại đăng nhập" phải luôn hiện hữu.
+## 3. UI/UX Rules
+- Use `<zap-input>` for the Email field.
+- Display a guidance message instructing the user to check their email after successful submission.
+- The "Back to login" button must always be visible.

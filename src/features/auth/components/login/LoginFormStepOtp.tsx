@@ -71,7 +71,7 @@ export const LoginFormStepOtp: React.FC<Props> = ({ email, onBack, onSwitchToPas
     const handleContinue = async () => {
         const otpCode = otp.join('');
         if (otpCode.length < 6) {
-            setError(t('auth.register.error_otp_required'));
+            setError(t('auth.register_error_otp_required'));
             return;
         }
         
@@ -88,7 +88,7 @@ export const LoginFormStepOtp: React.FC<Props> = ({ email, onBack, onSwitchToPas
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
             {/* Display and Change Account */}
             <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.register.contact')}</label>
+                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.register_contact')}</label>
                 <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl flex items-center justify-between border border-slate-100 dark:border-slate-800">
                     <span className="text-sm font-bold text-slate-700 dark:text-slate-300 truncate max-w-[220px]">{email}</span>
                     <button
@@ -96,14 +96,14 @@ export const LoginFormStepOtp: React.FC<Props> = ({ email, onBack, onSwitchToPas
                         onClick={onBack}
                         className="text-xs font-bold text-blue-600 hover:text-blue-700"
                     >
-                        {t('auth.login.change')}
+                        {t('auth.login_change')}
                     </button>
                 </div>
             </div>
 
             <div className="space-y-4">
                 <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium">
-                    {t('auth.register.otpInstruction1')} {email}
+                    {t('auth.register_otpInstruction1')} {email}
                 </p>
 
                 <div className="flex justify-between gap-2 md:gap-3">
@@ -122,19 +122,19 @@ export const LoginFormStepOtp: React.FC<Props> = ({ email, onBack, onSwitchToPas
                 </div>
 
                 <div className="flex justify-between text-[13px] items-center font-bold">
-                    <span className="text-slate-500 dark:text-slate-400">{t('auth.register.notReceiveCode')}</span>
+                    <span className="text-slate-500 dark:text-slate-400">{t('auth.register_notReceiveCode')}</span>
                     <button 
                         onClick={handleResend}
                         disabled={timer > 0 || isLoading}
                         className={`transition-colors ${timer > 0 ? 'text-slate-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-700'}`}
                     >
-                        {t('auth.register.resendCode')} {timer > 0 && `(${formatTime(timer)})`}
+                        {t('auth.register_resendCode')} {timer > 0 && `(${formatTime(timer)})`}
                     </button>
                 </div>
 
                 <div className="pt-2">
                     <zap-checkbox
-                        label={t('auth.login.remember')}
+                        label={t('auth.login_remember')}
                         checked={isRemember}
                         onInput={(e: any) => setIsRemember(e.detail.checked)}
                     ></zap-checkbox>
@@ -148,7 +148,7 @@ export const LoginFormStepOtp: React.FC<Props> = ({ email, onBack, onSwitchToPas
             )}
 
             <zap-button
-                label={isLoginLoading ? t('auth.register.continue') + "..." : t('auth.register.continue')}
+                label={isLoginLoading ? t('auth.register_continue') + "..." : t('auth.register_continue')}
                 variant="contained"
                 size="large"
                 fullwidth
@@ -167,7 +167,7 @@ export const LoginFormStepOtp: React.FC<Props> = ({ email, onBack, onSwitchToPas
             >
                 <div className="flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300">
                     <Lock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                    <span>{t('auth.login.password_login') || "Đăng nhập bằng mật khẩu"}</span>
+                    <span>{t('auth.login_password_login') || "Đăng nhập bằng mật khẩu"}</span>
                 </div>
             </zap-button>
         </div>

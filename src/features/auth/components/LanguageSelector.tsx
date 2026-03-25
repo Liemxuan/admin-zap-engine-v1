@@ -6,7 +6,7 @@ import { useTheme } from '../../../shared/contexts/ThemeContext';
 
 export const LanguageSelector: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { language, setLanguage } = useLanguage();
+    const { language, setLanguage, t } = useLanguage();
     const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,7 +40,7 @@ export const LanguageSelector: React.FC = () => {
             <button
                 onClick={toggleTheme}
                 className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 border border-slate-100 dark:border-slate-700"
-                title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+                title={theme === 'light' ? t('common.darkMode') : t('common.lightMode')}
             >
                 {theme === 'light' ? (
                     <Moon className="w-5 h-5 transition-transform duration-500 hover:rotate-12" />
@@ -72,7 +72,7 @@ export const LanguageSelector: React.FC = () => {
                         />
                         <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-zinc-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 ring-1 ring-zinc-100 dark:ring-slate-800 z-20">
                             <div className="px-4 py-2 mb-1 border-b border-zinc-50 dark:border-slate-800">
-                                <span className="text-[10px] font-bold text-zinc-400 dark:text-slate-500 uppercase tracking-widest">Select Language</span>
+                                <span className="text-[10px] font-bold text-zinc-400 dark:text-slate-500 uppercase tracking-widest">{t('common.selectLanguage')}</span>
                             </div>
                             {languages.map((lang) => (
                                 <button

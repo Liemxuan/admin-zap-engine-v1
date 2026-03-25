@@ -19,7 +19,7 @@ export const SocialForm: React.FC = () => {
                         className="w-5 h-5 object-contain"
                         alt="Google"
                     />
-                    <span className="text-sm">{t('auth.social.google')}</span>
+                    <span className="text-sm">{t('auth.social_google')}</span>
                 </div>
             </zap-button>
 
@@ -36,7 +36,7 @@ export const SocialForm: React.FC = () => {
                         className="w-5 h-5 object-contain"
                         alt="Apple"
                     />
-                    <span className="text-sm">{t('auth.social.apple')}</span>
+                    <span className="text-sm">{t('auth.social_apple')}</span>
                 </div>
             </zap-button>
         </div>

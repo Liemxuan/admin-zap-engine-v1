@@ -24,15 +24,15 @@ export const ForgotPasswordForm: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                        {t('auth.forgotPassword.success_title')}
+                        {t('auth.forgotPassword_success_title')}
                     </h3>
                     <p className="text-slate-500 dark:text-slate-400 text-sm max-w-[280px] mx-auto leading-relaxed">
-                        {t('auth.forgotPassword.success_message')}
+                        {t('auth.forgotPassword_success_message')}
                     </p>
                 </div>
                 <div className="pt-4">
                     <zap-button
-                        label={t('auth.forgotPassword.backToLogin')}
+                        label={t('auth.forgotPassword_backToLogin')}
                         variant="contained"
                         size="large"
                         fullwidth
@@ -49,9 +49,9 @@ export const ForgotPasswordForm: React.FC = () => {
             <div className="space-y-1">
                 <zap-input
                     ref={refs.emailRef}
-                    label={t('auth.forgotPassword.email')}
+                    label={t('auth.forgotPassword_email')}
                     type="email"
-                    placeholder={t('auth.forgotPassword.emailPlaceholder')}
+                    placeholder={t('auth.forgotPassword_emailPlaceholder')}
                     value={email}
                     icon-start="mail"
                     fullwidth
@@ -66,7 +66,7 @@ export const ForgotPasswordForm: React.FC = () => {
 
             <div className="pt-2">
                 <zap-button
-                    label={isLoading ? t('auth.forgotPassword.submit') + "..." : t('auth.forgotPassword.submit')}
+                    label={isLoading ? t('auth.forgotPassword_submit') + "..." : t('auth.forgotPassword_submit')}
                     variant="contained"
                     size="large"
                     fullwidth
@@ -85,7 +85,7 @@ export const ForgotPasswordForm: React.FC = () => {
                     className="text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center justify-center gap-2"
                 >
                     <i data-lucide="arrow-left" className="w-4 h-4"></i>
-                    {t('auth.forgotPassword.backToLogin')}
+                    {t('auth.forgotPassword_backToLogin')}
                 </a>
             </div>
         </form>

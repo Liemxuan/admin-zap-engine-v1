@@ -5,22 +5,18 @@ export const product = {
     add: 'Add New Product',
     edit: 'Edit Product',
     delete: 'Delete Product',
-    fields: {
-        name: 'Product Name',
-        description: 'Description',
-        price: 'Price',
-        image: 'Image (URL)',
-        category: 'Category',
-        status: 'Status',
-        available: 'Available',
-        outOfStock: 'Out of Stock'
-    },
-    placeholders: {
-        name: 'Enter product name...',
-        description: 'Enter product description...',
-        price: '0',
-        image: 'https://...',
-        category: 'Select category...',
-        search: 'Search products...'
-    }
+    name: 'Product name',
+    description: 'Description',
+    price: 'Price',
+    image: 'Image (URL)',
+    category: 'Category',
+    status: 'Status',
+    available: 'Available',
+    outOfStock: 'Out of stock',
+    namePlaceholder: 'Enter product name...',
+    descriptionPlaceholder: 'Enter product description...',
+    pricePlaceholder: '0',
+    imagePlaceholder: 'https://...',
+    categoryPlaceholder: 'Select category...',
+    search: 'Search products...'
 };

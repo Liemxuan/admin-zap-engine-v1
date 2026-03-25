@@ -1,9 +1,9 @@
-# Danh sách nhiệm vụ tính năng Đặt lại mật khẩu
+# Reset Password Feature Task List
 
-- [x] Cập nhật interface `ResetPasswordRequest` (ConfirmToken, NewPassword, ConfirmPassword).
-- [x] Cấu hình endpoint `Auth/reset-password`.
-- [x] Chuyển đổi method API sang `POST`.
-- [x] Lấy `token` từ URL params gán vào `ConfirmToken`.
-- [x] Xây dựng UI `ResetPasswordForm`.
-- [x] Tích hợp sự kiện phím **Enter**.
-- [x] Xử lý proxy CORS để test local.
+- [x] Update `ResetPasswordRequest` interface (ConfirmToken, NewPassword, ConfirmPassword).
+- [x] Configure `Auth/reset-password` endpoint.
+- [x] Switch API method to `POST`.
+- [x] Extract `token` from URL params and assign to `ConfirmToken`.
+- [x] Build `ResetPasswordForm` UI.
+- [x] Integrate **Enter** key event.
+- [x] Handle CORS proxy for local testing.

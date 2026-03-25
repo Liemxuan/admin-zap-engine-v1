@@ -1,30 +1,30 @@
-# Quy tắc chuyên biệt cho trang Login (ZAP Design Engine)
+﻿# Login Page Rules (ZAP Design Engine)
 
-Tài liệu này định nghĩa các quy chuẩn kỹ thuật bắt buộc khi làm việc với trang Login (`src/features/auth/`).
+This document defines mandatory technical standards when working with the Login page (src/features/auth/).
 
-### 1. Kiến trúc & Vị trí (DDD Implementation)
-- **Feature Layer**: Toàn bộ logic login phải nằm hoàn toàn trong `src/features/auth/`.
-- **Phân tách trách nhiệm**:
-  - `pages/`: Chỉ chứa cấu trúc layout và lắp ráp các thành phần.
-  - `components/`: UI logic & form handlers.
-  - `hooks/`: Business logic, state management (như `useLogin`).
-  - `services/`: API layer (Axios clients).
-  - `types/`: Domain models (định nghĩa request/response).
+### 1. Architecture & Location (DDD Implementation)
+- **Feature Layer**: All login logic must reside entirely within src/features/auth/.
+- **Separation of Concerns**:
+  - pages/: Layout structure and component assembly only.
+  - components/: UI logic & form handlers.
+  - hooks/: Business logic, state management (e.g. useLogin).
+  - services/: API layer (Axios clients).
+  - types/: Domain models (request/response definitions).
 
-### 2. Chuẩn hóa Dữ liệu (Backend Consistency)
-- **PascalCase Enforcement**: Mọi Interface phản ánh dữ liệu trả về từ API của ZAP Design Engine PHP Backend phải sử dụng PascalCase.
-  - Ví dụ: `Success`, `Message`, `AccessToken`, `RefreshToken`.
-- **Type Safety**: Tuyệt đối không sử dụng `any`. Phải định nghĩa interface đầy đủ cho mọi payload.
+### 2. Data Normalization (Backend Consistency)
+- **PascalCase Enforcement**: All interfaces reflecting data returned from the ZAP Design Engine PHP Backend API must use PascalCase.
+  - Example: Success, Message, AccessToken, RefreshToken.
+- **Type Safety**: Never use any. Always define complete interfaces for all payloads.
 
-### 3. Thành phần giao diện (Design System)
-- **Web Component First**: Chỉ sử dụng `<zap-input>`, `<zap-button>`, và `<zap-checkbox>`.
-- **State Handling**: Các component này phải được binding `value` và `onChange` (hoặc custom event) với React state một cách đồng nhất.
-- **Button Loading**: Mọi thao tác gửi request đều phải thể hiện trạng thái `loading` trên `zap-button`.
+### 3. UI Components (Design System)
+- **Web Component First**: Only use <zap-input>, <zap-button>, and <zap-checkbox>.
+- **State Handling**: These components must bind value and onChange (or custom event) with React state consistently.
+- **Button Loading**: All API request actions must reflect a loading state on zap-button.
 
-### 4. Điều hướng & Bảo mật
-- **React-Router Only**: Sử dụng `useNavigate` cho các chuyển hướng thành công.
-- **Local Storage**: Token sau khi login thành công phải được lưu trữ vào `localStorage` theo đúng định dạng key đã thống nhất.
+### 4. Navigation & Security
+- **React-Router Only**: Use useNavigate for successful redirects.
+- **Local Storage**: Tokens after successful login must be stored in localStorage using the agreed key format.
 
 ---
 > [!NOTE]
-> Để giữ giao diện thống nhất, các styles đặc thù cho login nên được scoping bên trong CSS của `src/features/auth/`.
+> To maintain a consistent UI, login-specific styles should be scoped inside the CSS of src/features/auth/.

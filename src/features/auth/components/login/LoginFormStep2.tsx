@@ -32,7 +32,7 @@ export const LoginFormStep2: React.FC<Props> = ({ email, onBack, onSwitchToOtp, 
         <form className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500" onSubmit={handleSubmit}>
             {/* Display and Change Account */}
             <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.login.account')}</label>
+                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.login_account')}</label>
                 <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl flex items-center justify-between border border-slate-100 dark:border-slate-800">
                     <span className="text-sm font-bold text-slate-700 dark:text-slate-300 truncate max-w-[220px]">{email}</span>
                     <button
@@ -40,7 +40,7 @@ export const LoginFormStep2: React.FC<Props> = ({ email, onBack, onSwitchToOtp, 
                         onClick={onBack}
                         className="text-xs font-bold text-blue-600 hover:text-blue-700"
                     >
-                        {t('auth.login.change')}
+                        {t('auth.login_change')}
                     </button>
                 </div>
             </div>
@@ -53,19 +53,19 @@ export const LoginFormStep2: React.FC<Props> = ({ email, onBack, onSwitchToOtp, 
             <div className="space-y-5">
                 <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                        <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.login.password')}</label>
+                        <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.login_password')}</label>
                         <button
                             type="button"
                             onClick={() => navigate(`/${language}/forgot-password`)}
                             className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
                         >
-                            {t('auth.login.forgot')}
+                            {t('auth.login_forgot')}
                         </button>
                     </div>
                     <zap-input
                         ref={refs.passRef}
                         type="password"
-                        placeholder={t('auth.login.passwordPlaceholder')}
+                        placeholder={t('auth.login_passwordPlaceholder')}
                         value={formData.Password}
                         icon-start="lock"
                         fullwidth
@@ -74,7 +74,7 @@ export const LoginFormStep2: React.FC<Props> = ({ email, onBack, onSwitchToOtp, 
 
                 <zap-checkbox
                     ref={refs.rememberRef}
-                    label={t('auth.login.remember')}
+                    label={t('auth.login_remember')}
                     checked={formData.IsRemember}
                 ></zap-checkbox>
             </div>
@@ -86,7 +86,7 @@ export const LoginFormStep2: React.FC<Props> = ({ email, onBack, onSwitchToOtp, 
             )}
 
             <zap-button
-                label={isLoading ? t('auth.login.submit') + "..." : t('auth.login.submit')}
+                label={isLoading ? t('auth.login_submit') + "..." : t('auth.login_submit')}
                 variant="contained"
                 size="large"
                 fullwidth
@@ -108,7 +108,7 @@ export const LoginFormStep2: React.FC<Props> = ({ email, onBack, onSwitchToOtp, 
             >
                 <div className="flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300">
                     <i data-lucide="shield-check" className="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
-                    <span>{t('auth.login.otp_login')}</span>
+                    <span>{t('auth.login_otp_login')}</span>
                 </div>
             </zap-button>
         </form>

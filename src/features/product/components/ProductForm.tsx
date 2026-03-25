@@ -33,8 +33,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Product Name */}
                 <zap-input
-                    label={t('product.fields.name')}
-                    placeholder={t('product.placeholders.name')}
+                    label={t('product.name')}
+                    placeholder={t('product.namePlaceholder')}
                     value={formData.name}
                     onInput={(e: any) => handleInput('name', e.target.value)}
                     fullwidth
@@ -43,8 +43,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
 
                 {/* Category */}
                 <zap-input
-                    label={t('product.fields.category')}
-                    placeholder={t('product.placeholders.category')}
+                    label={t('product.category')}
+                    placeholder={t('product.categoryPlaceholder')}
                     value={formData.category}
                     onInput={(e: any) => handleInput('category', e.target.value)}
                     fullwidth
@@ -52,9 +52,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
 
                 {/* Price */}
                 <zap-input
-                    label={t('product.fields.price')}
+                    label={t('product.price')}
                     type="number"
-                    placeholder={t('product.placeholders.price')}
+                    placeholder={t('product.pricePlaceholder')}
                     value={formData.price?.toString()}
                     onInput={(e: any) => handleInput('price', Number(e.target.value))}
                     fullwidth
@@ -63,8 +63,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
 
                 {/* Image URL */}
                 <zap-input
-                    label={t('product.fields.image')}
-                    placeholder={t('product.placeholders.image')}
+                    label={t('product.image')}
+                    placeholder={t('product.imagePlaceholder')}
                     value={formData.image}
                     onInput={(e: any) => handleInput('image', e.target.value)}
                     fullwidth
@@ -73,8 +73,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
 
             {/* Description */}
             <zap-input
-                label={t('product.fields.description')}
-                placeholder={t('product.placeholders.description')}
+                label={t('product.description')}
+                placeholder={t('product.descriptionPlaceholder')}
                 value={formData.description}
                 onInput={(e: any) => handleInput('description', e.target.value)}
                 fullwidth
@@ -84,12 +84,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
             {/* Status */}
             <div className="flex items-center space-x-2 py-2">
                 <zap-switch
-                    label={t('product.fields.status')}
+                    label={t('product.status')}
                     checked={formData.status === 'available'}
                     onChange={(e: any) => handleInput('status', e.target.checked ? 'available' : 'out_of_stock')}
                 ></zap-switch>
                 <span className="text-sm text-slate-500 font-medium">
-                    {formData.status === 'available' ? t('product.fields.available') : t('product.fields.outOfStock')}
+                    {formData.status === 'available' ? t('product.available') : t('product.outOfStock')}
                 </span>
             </div>
 

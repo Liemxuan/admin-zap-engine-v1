@@ -55,18 +55,18 @@ export const ForgotPasswordSteps: React.FC = () => {
         switch (step) {
             case 'enter-email':
                 return {
-                    title: t('auth.forgotPassword.title'),
-                    subtitle: t('auth.forgotPassword.subtitle')
+                    title: t('auth.forgotPassword_title'),
+                    subtitle: t('auth.forgotPassword_subtitle')
                 };
             case 'verify-otp':
                 return {
-                    title: t('auth.register.verify_title'),
-                    subtitle: t('auth.register.verify_subtitle')
+                    title: t('auth.register_verify_title'),
+                    subtitle: t('auth.register_verify_subtitle')
                 };
             case 'reset-password':
                 return {
-                    title: t('auth.resetPassword.title'),
-                    subtitle: t('auth.resetPassword.subtitle')
+                    title: t('auth.resetPassword_title'),
+                    subtitle: t('auth.resetPassword_subtitle')
                 };
             default:
                 return { title: '', subtitle: '' };
@@ -95,7 +95,7 @@ export const ForgotPasswordSteps: React.FC = () => {
                     <div className="space-y-1">
                         <zap-input
                             ref={refs.emailRef}
-                            label={t('auth.forgotPassword.email')}
+                            label={t('auth.forgotPassword_email')}
                             type="text"
                             placeholder="kien.phan@zap.vn"
                             value={email}
@@ -112,7 +112,7 @@ export const ForgotPasswordSteps: React.FC = () => {
 
                     <div className="pt-2">
                         <zap-button
-                            label={t('auth.forgotPassword.submit')}
+                            label={t('auth.forgotPassword_submit')}
                             variant="contained"
                             size="large"
                             fullwidth
@@ -128,7 +128,7 @@ export const ForgotPasswordSteps: React.FC = () => {
                             className="text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors flex items-center justify-center gap-2 mx-auto"
                         >
                             <ArrowLeft className="w-4 h-4" />
-                            {t('auth.forgotPassword.backToLogin')}
+                            {t('auth.forgotPassword_backToLogin')}
                         </button>
                     </div>
 
@@ -136,7 +136,7 @@ export const ForgotPasswordSteps: React.FC = () => {
                         <div className="bg-green-50 border border-green-100 p-4 rounded-xl flex gap-3 animate-in fade-in slide-in-from-bottom-2">
                             <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                             <p className="text-sm text-green-700 font-medium">
-                                {t('auth.forgotPassword.success_message')}
+                                {t('auth.forgotPassword_success_message')}
                             </p>
                         </div>
                     )}
@@ -177,13 +177,13 @@ export const ForgotPasswordSteps: React.FC = () => {
                     </div>
 
                     <div className="flex justify-between items-center text-sm font-bold">
-                        <span className="text-slate-400">{t('auth.register.notReceiveCode')}</span>
+                        <span className="text-slate-400">{t('auth.register_notReceiveCode')}</span>
                         <button 
                             onClick={onResend}
                             disabled={timer > 0 || isLoading}
                             className={`transition-colors ${timer > 0 ? 'text-slate-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-700'}`}
                         >
-                            {t('auth.register.resendCode')} {timer > 0 && `(${formatTime(timer)})`}
+                            {t('auth.register_resendCode')} {timer > 0 && `(${formatTime(timer)})`}
                         </button>
                     </div>
 
@@ -195,7 +195,7 @@ export const ForgotPasswordSteps: React.FC = () => {
 
                     <div className="pt-2">
                         <zap-button
-                            label={t('auth.register.confirm')}
+                            label={t('auth.register_confirm')}
                             variant="contained"
                             size="large"
                             fullwidth
@@ -211,7 +211,7 @@ export const ForgotPasswordSteps: React.FC = () => {
                             className="text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors flex items-center justify-center gap-2 mx-auto"
                         >
                             <ArrowLeft className="w-4 h-4" />
-                            {t('auth.register.back')}
+                            {t('auth.register_back')}
                         </button>
                     </div>
                 </div>
@@ -229,9 +229,9 @@ export const ForgotPasswordSteps: React.FC = () => {
                         <div className="relative">
                             <zap-input
                                 ref={refs.passwordRef}
-                                label={t('auth.register.password')}
+                                label={t('auth.register_password')}
                                 type="password"
-                                placeholder={t('auth.register.passwordPlaceholder')}
+                                placeholder={t('auth.register_passwordPlaceholder')}
                                 value={password}
                                 icon-start="lock"
                                 fullwidth
@@ -240,8 +240,8 @@ export const ForgotPasswordSteps: React.FC = () => {
 
                         <div className="space-y-2">
                             <div className="flex justify-between text-xs font-bold">
-                                <span className="text-slate-500">{t('auth.register.securityLevel')}</span>
-                                <span className="text-orange-500">{t('auth.register.pwdAverage')}</span>
+                                <span className="text-slate-500">{t('auth.register_securityLevel')}</span>
+                                <span className="text-orange-500">{t('auth.register_pwdAverage')}</span>
                             </div>
                             <div className="flex gap-1 h-1">
                                 <div className="flex-1 bg-blue-500 rounded-full"></div>
@@ -251,16 +251,16 @@ export const ForgotPasswordSteps: React.FC = () => {
                                 <div className="flex-1 bg-slate-100 rounded-full"></div>
                             </div>
                             <p className="text-[10px] text-slate-400 font-medium">
-                                {t('auth.register.pwdHint')}
+                                {t('auth.register_pwdHint')}
                             </p>
                         </div>
 
                         <div className="relative">
                             <zap-input
                                 ref={refs.confirmRef}
-                                label={t('auth.register.confirmPassword')}
+                                label={t('auth.register_confirmPassword')}
                                 type="password"
-                                placeholder={t('auth.register.passwordPlaceholder')}
+                                placeholder={t('auth.register_passwordPlaceholder')}
                                 value={confirmPassword}
                                 icon-start="lock"
                                 fullwidth
@@ -276,7 +276,7 @@ export const ForgotPasswordSteps: React.FC = () => {
 
                     <div className="pt-2">
                         <zap-button
-                            label={t('auth.resetPassword.submit')}
+                            label={t('auth.resetPassword_submit')}
                             variant="contained"
                             size="large"
                             fullwidth
@@ -292,7 +292,7 @@ export const ForgotPasswordSteps: React.FC = () => {
                             className="text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors flex items-center justify-center gap-2 mx-auto"
                         >
                             <ArrowLeft className="w-4 h-4" />
-                            {t('auth.forgotPassword.backToLogin')}
+                            {t('auth.forgotPassword_backToLogin')}
                         </button>
                     </div>
                 </div>
@@ -311,16 +311,16 @@ export const ForgotPasswordSteps: React.FC = () => {
             
             <div className="space-y-3">
                 <h3 className="text-2xl font-black text-slate-900 leading-tight">
-                    {t('auth.resetPassword.success_title')}
+                    {t('auth.resetPassword_success_title')}
                 </h3>
                 <p className="text-slate-500 text-sm font-medium leading-relaxed max-w-[320px] mx-auto">
-                    {t('auth.resetPassword.success_message')}
+                    {t('auth.resetPassword_success_message')}
                 </p>
             </div>
 
             <div className="space-y-4 pt-4">
                 <zap-button
-                    label={t('auth.forgotPassword.backToLogin')}
+                    label={t('auth.forgotPassword_backToLogin')}
                     variant="contained"
                     size="large"
                     fullwidth

@@ -26,19 +26,19 @@ export const useResetPasswordForm = () => {
         setError(null);
 
         if (!password || password.length < 6) {
-            setError(t('auth.register.error_password_length') || 'Password must be at least 6 characters');
+            setError(t('auth.register_error_password_length') || 'Password must be at least 6 characters');
             passwordRef.current?.focus();
             return;
         }
 
         if (password !== confirmPassword) {
-            setError(t('auth.register.error_password_match') || 'Passwords do not match');
+            setError(t('auth.register_error_password_match') || 'Passwords do not match');
             confirmRef.current?.focus();
             return;
         }
 
         if (!token) {
-            setError(t('auth.resetPassword.error_invalid') || 'Invalid or expired reset link.');
+            setError(t('auth.resetPassword_error_invalid') || 'Invalid or expired reset link.');
             return;
         }
 
@@ -56,12 +56,12 @@ export const useResetPasswordForm = () => {
                     navigate(`/${language}/login`);
                 }, 3000);
             } else {
-                const msg = response.message || response.Message || response.detail || response.Detail || t('auth.resetPassword.error_general') || 'Failed to reset password.';
+                const msg = response.message || response.Message || response.detail || response.Detail || t('auth.resetPassword_error_general') || 'Failed to reset password.';
                 setError(msg);
             }
         } catch (err: any) {
             const resData = err.response?.data;
-            const msg = resData?.message || resData?.Message || resData?.detail || resData?.Detail || t('auth.resetPassword.error_general') || 'Failed to reset password. Please try again.';
+            const msg = resData?.message || resData?.Message || resData?.detail || resData?.Detail || t('auth.resetPassword_error_general') || 'Failed to reset password. Please try again.';
             setError(msg);
         } finally {
             setIsLoading(false);

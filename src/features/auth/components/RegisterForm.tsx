@@ -21,8 +21,8 @@ export const RegisterForm: React.FC = () => {
             {/* Merchant Identifier */}
             <zap-input
                 ref={refs.merchantRef}
-                label={t('auth.register.merchantAccount')}
-                placeholder={t('auth.register.merchantPlaceholder')}
+                label={t('auth.register_merchantAccount')}
+                placeholder={t('auth.register_merchantPlaceholder')}
                 value={formData.MerchantName}
                 icon-start="building-2"
                 fullwidth
@@ -32,9 +32,9 @@ export const RegisterForm: React.FC = () => {
                 {/* Email */}
                 <zap-input
                     ref={refs.emailRef}
-                    label={t('auth.register.email')}
+                    label={t('auth.register_email')}
                     type="email"
-                    placeholder={t('auth.register.emailPlaceholder')}
+                    placeholder={t('auth.register_emailPlaceholder')}
                     value={formData.Email}
                     icon-start="mail"
                     fullwidth
@@ -43,8 +43,8 @@ export const RegisterForm: React.FC = () => {
                 {/* Phone */}
                 <zap-input
                     ref={refs.phoneRef}
-                    label={t('auth.register.phone')}
-                    placeholder={t('auth.register.phonePlaceholder')}
+                    label={t('auth.register_phone')}
+                    placeholder={t('auth.register_phonePlaceholder')}
                     value={formData.Phone}
                     icon-start="phone"
                     fullwidth
@@ -54,9 +54,9 @@ export const RegisterForm: React.FC = () => {
             {/* Password */}
             <zap-input
                 ref={refs.passwordRef}
-                label={t('auth.register.password')}
+                label={t('auth.register_password')}
                 type="password"
-                placeholder={t('auth.register.passwordPlaceholder')}
+                placeholder={t('auth.register_passwordPlaceholder')}
                 value={formData.Password}
                 icon-start="lock"
                 icon-end="eye-off"
@@ -66,9 +66,9 @@ export const RegisterForm: React.FC = () => {
             {/* Confirm Password */}
             <zap-input
                 ref={refs.confirmRef}
-                label={t('auth.register.confirmPassword')}
+                label={t('auth.register_confirmPassword')}
                 type="password"
-                placeholder={t('auth.register.passwordPlaceholder')}
+                placeholder={t('auth.register_confirmPlaceholder')}
                 value={formData.ConfirmPass}
                 icon-start="lock"
                 icon-end="eye-off"
@@ -77,7 +77,7 @@ export const RegisterForm: React.FC = () => {
 
             <div className="py-2">
                 <p className="text-[11px] leading-relaxed text-slate-400 font-medium">
-                    {t('auth.register.terms_agree')}
+                    {t('auth.register_terms_agree')}
                 </p>
             </div>
 
@@ -90,7 +90,7 @@ export const RegisterForm: React.FC = () => {
             {/* Submit Button */}
             <div className="pt-2">
                 <zap-button
-                    label={isLoading ? t('auth.register.submit') + "..." : t('auth.register.submit')}
+                    label={isLoading ? t('auth.register_submit') + "..." : t('auth.register_submit')}
                     variant="contained"
                     size="large"
                     fullwidth
@@ -105,13 +105,13 @@ export const RegisterForm: React.FC = () => {
             {/* Signin prompt */}
             <div className="text-center pt-6">
                 <p className="text-sm text-slate-500">
-                    {t('auth.signin.signin_prompt')}{' '}
+                    {t('auth.signin_signin_prompt')}{' '}
                     <a
                         href={`/${language}/login`}
                         onClick={(e) => { e.preventDefault(); navigate(`/${language}/login`); }}
                         className="text-blue-600 font-bold hover:underline transition-all"
                     >
-                        {t('auth.signin.signin')}
+                        {t('auth.signin_signin')}
                     </a>
                 </p>
             </div>

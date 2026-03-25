@@ -146,6 +146,16 @@ export const productService = {
             );
         }
 
+        // Category filter
+        if (params.categories && params.categories.length > 0) {
+            filtered = filtered.filter(p => params.categories!.includes(p.category));
+        }
+
+        // Status filter
+        if (params.status) {
+            filtered = filtered.filter(p => p.status === params.status);
+        }
+
         // Pagination logic
         const pageIndex = params.pageIndex || 1;
         const pageSize = params.pageSize || 10;

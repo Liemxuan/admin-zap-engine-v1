@@ -133,31 +133,31 @@ export const useRegisterForm = () => {
         setLocalError(null);
 
         if (!formData.MerchantName) {
-            setLocalError(t('auth.register.error_merchant_required') || 'Merchant name is required');
+            setLocalError(t('auth.register_error_merchant_required') || 'Merchant name is required');
             merchantRef.current?.focus();
             return;
         }
 
         if (!validateEmail(formData.Email)) {
-            setLocalError(t('auth.register.error_email_invalid') || 'Invalid email format');
+            setLocalError(t('auth.register_error_email_invalid') || 'Invalid email format');
             emailRef.current?.focus();
             return;
         }
 
         if (!validatePhone(formData.Phone)) {
-            setLocalError(t('auth.register.error_phone_invalid') || 'Invalid phone number format');
+            setLocalError(t('auth.register_error_phone_invalid') || 'Invalid phone number format');
             phoneRef.current?.focus();
             return;
         }
 
         if (formData.Password.length < 6) {
-            setLocalError(t('auth.register.error_password_length') || 'Password must be at least 6 characters');
+            setLocalError(t('auth.register_error_password_length') || 'Password must be at least 6 characters');
             passwordRef.current?.focus();
             return;
         }
 
         if (formData.Password !== formData.ConfirmPass) {
-            setLocalError(t('auth.register.error_password_match') || 'Passwords do not match');
+            setLocalError(t('auth.register_error_password_match') || 'Passwords do not match');
             confirmRef.current?.focus();
             return;
         }

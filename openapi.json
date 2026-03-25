@@ -1,0 +1,1123 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ZAP Design Engine API (v1.3.0)",
+    "version": "1.3.0",
+    "description": "Clean design: Grouped Login & Register folders"
+  },
+  "tags": [
+    {
+      "name": "Login",
+      "description": "Folder: Login"
+    },
+    {
+      "name": "Register",
+      "description": "Folder: Register"
+    },
+    {
+      "name": "Product",
+      "description": "Folder: Product"
+    }
+  ],
+  "paths": {
+    "/api/auth/check-account": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "x-apidog-folder": "Login",
+        "summary": "1. Check account (Login)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "MER-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "Account found"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "exists": {
+                              "type": "boolean",
+                              "example": true
+                            },
+                            "methods": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": [
+                                "password",
+                                "otp"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 404
+                        },
+                        "success": {
+                          "example": false
+                        },
+                        "message": {
+                          "example": "Account not found"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/send-otp": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "x-apidog-folder": "Login",
+        "summary": "2. Send OTP (Login)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "MER-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "OTP sent successfully"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/verify-otp": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "x-apidog-folder": "Login",
+        "summary": "3. Verify OTP & Login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "MER-12345"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessLogin"
+          },
+          "400": {
+            "$ref": "#/components/responses/ErrorInvalidOtp"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "x-apidog-folder": "Login",
+        "summary": "4. Login with password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "MER-12345"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "P@ssw0rd!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessLogin"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorUnauthorized"
+          }
+        }
+      }
+    },
+    "/api/register/check-account": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "1. Check account availability (Register)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "Account is available"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Account already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 400
+                        },
+                        "success": {
+                          "example": false
+                        },
+                        "message": {
+                          "example": "Account already registered"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/register/send-otp": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "2. Send OTP (Register)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "OTP sent successfully"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/register/check-otp": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "3. Verify OTP (Register)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "OTP verified"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ErrorInvalidOtp"
+          }
+        }
+      }
+    },
+    "/api/register/check-merchant-url": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "4. Check merchant URL availability",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "merchant_url": {
+                    "type": "string",
+                    "example": "my-store"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "URL is available"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "URL already taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 400
+                        },
+                        "success": {
+                          "example": false
+                        },
+                        "message": {
+                          "example": "Merchant URL already in use"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/register/check-email": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "5. Check email availability",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "Email is available"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 400
+                        },
+                        "success": {
+                          "example": false
+                        },
+                        "message": {
+                          "example": "Email already registered"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/register/check-phone": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "6. Check phone number availability",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone": {
+                    "type": "string",
+                    "example": "0912345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone number available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "Phone number is available"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Phone number already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 400
+                        },
+                        "success": {
+                          "example": false
+                        },
+                        "message": {
+                          "example": "Phone number already registered"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/register/insert-merchant": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "x-apidog-folder": "Register",
+        "summary": "7. Complete registration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "merchant_name": {
+                    "type": "string",
+                    "example": "My Store"
+                  },
+                  "merchant_url": {
+                    "type": "string",
+                    "example": "my-store"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "0912345678"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "P@ssw0rd!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registration successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "example": 200
+                        },
+                        "success": {
+                          "example": true
+                        },
+                        "message": {
+                          "example": "Registration successful"
+                        },
+                        "data": {
+                          "example": null
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ErrorBadRequest"
+          }
+        }
+      }
+    },
+    "/api/product/list": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "x-apidog-folder": "Product",
+        "summary": "List products",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "page_index": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "page_size": {
+                    "type": "integer",
+                    "example": 10
+                  },
+                  "search": {
+                    "type": "string",
+                    "example": "iphone"
+                  },
+                  "filters": {
+                    "type": "object",
+                    "properties": {
+                      "cate_id": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "1",
+                          "2"
+                        ]
+                      },
+                      "status": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "example": [
+                          1,
+                          2
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SuccessListProduct"
+          },
+          "401": {
+            "$ref": "#/components/responses/ErrorUnauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "code": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": ""
+          },
+          "data": {}
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cate_name": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "status": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "responses": {
+      "SuccessLogin": {
+        "description": "Login successful",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                {
+                  "properties": {
+                    "code": {
+                      "example": 200
+                    },
+                    "success": {
+                      "example": true
+                    },
+                    "message": {
+                      "example": "Login successful"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "merchant_id": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "logo_url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SuccessListProduct": {
+        "description": "Product list retrieved",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                {
+                  "properties": {
+                    "code": {
+                      "example": 200
+                    },
+                    "success": {
+                      "example": true
+                    },
+                    "message": {
+                      "example": "OK"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total_page": {
+                          "type": "integer",
+                          "example": 100
+                        },
+                        "total_record": {
+                          "type": "integer",
+                          "example": 1000
+                        },
+                        "page_index": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "page_size": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Product"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ErrorBadRequest": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                {
+                  "properties": {
+                    "code": {
+                      "example": 400
+                    },
+                    "success": {
+                      "example": false
+                    },
+                    "message": {
+                      "example": "Bad request"
+                    },
+                    "data": {
+                      "example": null
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ErrorUnauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                {
+                  "properties": {
+                    "code": {
+                      "example": 401
+                    },
+                    "success": {
+                      "example": false
+                    },
+                    "message": {
+                      "example": "Unauthorized"
+                    },
+                    "data": {
+                      "example": null
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ErrorInvalidOtp": {
+        "description": "Invalid OTP",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                {
+                  "properties": {
+                    "code": {
+                      "example": 400
+                    },
+                    "success": {
+                      "example": false
+                    },
+                    "message": {
+                      "example": "Invalid or expired OTP"
+                    },
+                    "data": {
+                      "example": null
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

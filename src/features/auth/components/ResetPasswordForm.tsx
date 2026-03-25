@@ -25,15 +25,15 @@ export const ResetPasswordForm: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                     <h3 className="text-xl font-bold text-slate-900">
-                        {t('auth.resetPassword.success_title')}
+                        {t('auth.resetPassword_success_title')}
                     </h3>
                     <p className="text-slate-500 text-sm max-w-[280px] mx-auto leading-relaxed">
-                        {t('auth.resetPassword.success_message')}
+                        {t('auth.resetPassword_success_message')}
                     </p>
                 </div>
                 <div className="pt-4">
                     <zap-button
-                        label={t('auth.forgotPassword.backToLogin')}
+                        label={t('auth.forgotPassword_backToLogin')}
                         variant="contained"
                         size="large"
                         fullwidth
@@ -50,9 +50,9 @@ export const ResetPasswordForm: React.FC = () => {
             <div className="space-y-4">
                 <zap-input
                     ref={refs.passwordRef}
-                    label={t('auth.register.password')}
+                    label={t('auth.register_password')}
                     type="password"
-                    placeholder={t('auth.register.passwordPlaceholder')}
+                    placeholder={t('auth.register_passwordPlaceholder')}
                     value={password}
                     icon-start="lock"
                     fullwidth
@@ -60,9 +60,9 @@ export const ResetPasswordForm: React.FC = () => {
 
                 <zap-input
                     ref={refs.confirmRef}
-                    label={t('auth.register.confirmPassword')}
+                    label={t('auth.register_confirmPassword')}
                     type="password"
-                    placeholder={t('auth.register.passwordPlaceholder')}
+                    placeholder={t('auth.register_passwordPlaceholder')}
                     value={confirmPassword}
                     icon-start="lock"
                     fullwidth
@@ -77,7 +77,7 @@ export const ResetPasswordForm: React.FC = () => {
 
             <div className="pt-2">
                 <zap-button
-                    label={isLoading ? t('auth.resetPassword.submitting') : t('auth.resetPassword.submit')}
+                    label={isLoading ? t('auth.resetPassword_submitting') : t('auth.resetPassword_submit')}
                     variant="contained"
                     size="large"
                     fullwidth

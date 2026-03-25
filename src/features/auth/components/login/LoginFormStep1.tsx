@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../../../shared/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { SocialForm } from '../SocialForm';
 import { authService } from '../../services/auth.service';
+import { PhoneEmailInput } from '../PhoneEmailInput';
 
 interface Props {
     onNext: (email: string) => void;
@@ -17,7 +18,6 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
     const [identifier, setIdentifier] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const inputRef = useRef<any>(null);
     
     // Validate if it's a basic email or a phone number (simple check)
     const validateIdentifier = (val: string) => {
@@ -48,7 +48,7 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
                 const data = err.response?.data;
                 const errCode = data?.errorCode || data?.ErrorCode;
                 if (errCode === 'error_account_not_found') {
-                    setError(data?.detail || data?.Detail || t('auth.login.error_account_not_found') || "Email hoặc số điện thoại chưa được đăng ký.");
+                    setError(data?.detail || data?.Detail || t('auth.login_error_account_not_found') || "Email hoặc số điện thoại chưa được đăng ký.");
                 } else {
                     setError(data?.detail || data?.Detail || data?.message || data?.Message || "Đã có lỗi xảy ra");
                 }
@@ -56,23 +56,9 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
                 setIsLoading(false);
             }
         } else {
-            setError(t('auth.register.error_email_invalid'));
+            setError(t('auth.register_error_email_invalid'));
         }
     };
-
-    useEffect(() => {
-        const input = inputRef.current;
-        if (!input) return;
-
-        const onInput = (e: any) => {
-            const val = e.detail?.value !== undefined ? e.detail.value : e.target.value;
-            setIdentifier(val || '');
-            if (error) setError(null);
-        };
-
-        input.addEventListener('input', onInput);
-        return () => input.removeEventListener('input', onInput);
-    }, [error]);
 
     const isBlank = identifier.trim() === '';
 
@@ -80,23 +66,21 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
             <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.register.contact')}</label>
+                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('auth.register_contact')}</label>
                     <button
                         type="button"
                         onClick={() => navigate(`/${language}/forgot-password`)}
                         className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
                     >
-                        {t('auth.login.forgot')}
+                        {t('auth.login_forgot')}
                     </button>
                 </div>
-                <zap-input
-                    ref={inputRef}
-                    placeholder={t('auth.register.contactPlaceholder')}
+                <PhoneEmailInput
                     value={identifier}
-                    icon-start="user"
-                    fullwidth
-                    error={error ? "" : undefined}
-                ></zap-input>
+                    onChange={val => { setIdentifier(val); if (error) setError(null); }}
+                    placeholder={t('auth.register_contactPlaceholder')}
+                    hasError={!!error}
+                />
             </div>
 
             {error && (
@@ -106,7 +90,7 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
             )}
 
             <zap-button
-                label={isLoading ? t('auth.register.continue') + "..." : t('auth.register.continue')}
+                label={isLoading ? t('auth.register_continue') + "..." : t('auth.register_continue')}
                 variant="contained"
                 size="large"
                 fullwidth
@@ -120,19 +104,19 @@ export const LoginFormStep1: React.FC<Props> = ({ onNext }) => {
                 <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-slate-100 dark:border-slate-800"></div>
                 </div>
-                <span className="relative px-4 bg-white dark:bg-slate-950 text-xs font-bold text-slate-400 dark:text-slate-500">{t('auth.signin.social_login')}</span>
+                <span className="relative px-4 bg-white dark:bg-slate-950 text-xs font-bold text-slate-400 dark:text-slate-500">{t('auth.signin_social_login')}</span>
             </div>
 
             <SocialForm />
 
             <div className="text-center pt-2">
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-                    {t('auth.signin.signup_prompt')}{' '}
+                    {t('auth.signin_signup_prompt')}{' '}
                     <button
                         onClick={() => navigate(`/${language}/register`)}
                         className="text-blue-600 dark:text-blue-400 font-bold hover:underline"
                     >
-                        {t('auth.signin.signup')}
+                        {t('auth.signin_signup')}
                     </button>
                 </p>
             </div>

@@ -2,27 +2,44 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from '../../shared/contexts/LanguageContext';
 import { useLogin } from '../../features/auth/hooks/useLogin';
-import { LogOut, Globe, Check } from 'lucide-react';
+import { LogOut, Globe, Check, ChevronDown } from 'lucide-react';
 
 interface MainLayoutProps {
     children: React.ReactNode;
+    title?: string;
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+export const MainLayout: React.FC<MainLayoutProps> = ({ children, title }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { language, t, setLanguage } = useLanguage();
+    const { language, t, setLanguage, isChangingLanguage } = useLanguage();
     const { merchantName } = useParams();
     const { logout } = useLogin();
     const [isLangOpen, setIsLangOpen] = useState(false);
     const [isLogoutOpen, setIsLogoutOpen] = useState(false);
-    
+    const [isItemsOpen, setIsItemsOpen] = useState(true);
+
+    React.useEffect(() => {
+        if (title) {
+            document.title = `ZAP | ${title}`;
+        } else {
+            document.title = 'ZAP';
+        }
+    }, [title]);
+
     const isProductPage = location.pathname.includes('/product');
+    const isCategoryPage = location.pathname.includes('/category');
+    const isDiscountPage = location.pathname.includes('/discount');
+    const isModifierPage = location.pathname.includes('/modifier');
+    const isLocationPage = location.pathname.includes('/location');
+    const isCustomerPage = location.pathname.includes('/customer');
+    const isGroupPage = location.pathname.includes('/group');
+    const isDiningOptionPage = location.pathname.includes('/dining-option');
     const isDashboard = location.pathname.includes('/dashboard');
 
     const handleLanguageChange = (code: 'vi' | 'en') => {
         setLanguage(code);
-        
+
         // Update URL path prefix
         const pathSegments = location.pathname.split('/').filter(Boolean);
         if (pathSegments.length > 0 && (pathSegments[0] === 'vi' || pathSegments[0] === 'en')) {
@@ -41,6 +58,12 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
     return (
         <div className="min-h-screen flex flex-col w-full bg-slate-50 text-slate-900 selection:bg-blue-500/30 font-sans">
+            {isChangingLanguage && (
+                <div className="fixed inset-0 z-[9999] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center animate-in fade-in duration-300">
+                    <div className="w-12 h-12 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin mb-4" />
+                    <p className="text-sm font-bold text-slate-600 animate-pulse">{t('common.loading')}...</p>
+                </div>
+            )}
             <div id="app" className="min-h-screen flex flex-col">
                 {/* Sidebar / Nav Layout */}
                 <div className="flex flex-grow relative">
@@ -52,56 +75,128 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                             </div>
                             <nav className="space-y-1">
                                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 px-2">{t('sidebar.mainMenu')}</p>
-                                
-                                <Link 
-                                    to={`/${language}/${merchantName}/dashboard`} 
-                                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
-                                        isDashboard ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-                                    }`}
+
+                                <Link
+                                    to={`/${language}/${merchantName}/dashboard`}
+                                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${isDashboard ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                                        }`}
                                 >
                                     {t('sidebar.dashboard')}
                                 </Link>
 
                                 <div className="mt-8 pt-4 border-t border-slate-100">
                                     <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-4 px-2">{t('sidebar.management')}</p>
-                                    <Link 
-                                        to={`/${language}/${merchantName}/product`} 
-                                        className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${
-                                        isProductPage 
-                                        ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100' 
-                                        : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
-                                        }`}
+                                    <button
+                                        onClick={() => setIsItemsOpen(p => !p)}
+                                        className="w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-all cursor-pointer text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600"
                                     >
-                                        {t('sidebar.products')}
+                                        <span>{t('sidebar.items')}</span>
+                                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isItemsOpen ? '' : '-rotate-90'}`} />
+                                    </button>
+                                    {isItemsOpen && (
+                                        <div className="ml-3 pl-3 border-l border-slate-200 space-y-0.5">
+                                            <Link
+                                                to={`/${language}/${merchantName}/product`}
+                                                className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isProductPage
+                                                    ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                    : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                                }`}
+                                            >
+                                                {t('sidebar.products')}
+                                            </Link>
+                                            <Link
+                                                to={`/${language}/${merchantName}/category`}
+                                                className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isCategoryPage
+                                                    ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                    : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                                }`}
+                                            >
+                                                {t('sidebar.categories')}
+                                            </Link>
+                                            <Link
+                                                to={`/${language}/${merchantName}/group`}
+                                                className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isGroupPage
+                                                    ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                    : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                                }`}
+                                            >
+                                                {t('sidebar.groups')}
+                                            </Link>
+                                            <Link
+                                                to={`/${language}/${merchantName}/modifier`}
+                                                className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isModifierPage
+                                                    ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                    : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                                }`}
+                                            >
+                                                {t('sidebar.modifiers')}
+                                            </Link>
+                                        </div>
+                                    )}
+                                    <Link
+                                        to={`/${language}/${merchantName}/discount`}
+                                        className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isDiscountPage
+                                                ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                            }`}
+                                    >
+                                        {t('sidebar.discounts')}
+                                    </Link>
+                                    <Link
+                                        to={`/${language}/${merchantName}/location`}
+                                        className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isLocationPage
+                                                ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                            }`}
+                                    >
+                                        {t('sidebar.locations')}
+                                    </Link>
+                                    <Link
+                                        to={`/${language}/${merchantName}/customer`}
+                                        className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isCustomerPage
+                                                ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                            }`}
+                                    >
+                                        {t('sidebar.customers')}
+                                    </Link>
+                                    <Link
+                                        to={`/${language}/${merchantName}/dining-option`}
+                                        className={`block px-3 py-2 rounded-md text-sm transition-all cursor-pointer ${isDiningOptionPage
+                                                ? 'bg-blue-50 text-blue-600 font-bold border border-blue-100'
+                                                : 'text-slate-500 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                            }`}
+                                    >
+                                        {t('sidebar.diningOptions')}
                                     </Link>
                                 </div>
 
                                 {isDashboard && (
                                     <div className="mt-8 pt-4 border-t border-slate-100 space-y-1">
                                         <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 px-2">{t('sidebar.showcase')}</p>
-                                        <a href="#buttons" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Buttons</a>
-                                        <a href="#inputs" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Inputs</a>
-                                        <a href="#checkboxes" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Checkboxes</a>
-                                        <a href="#radios" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Radios</a>
-                                        <a href="#switches" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Switches</a>
-                                        <a href="#badges" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Badges</a>
-                                        <a href="#alerts" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Alerts</a>
-                                        <a href="#cards" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Cards</a>
+                                        <a href="#buttons" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.buttons')}</a>
+                                        <a href="#inputs" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.inputs')}</a>
+                                        <a href="#checkboxes" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.checkboxes')}</a>
+                                        <a href="#radios" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.radios')}</a>
+                                        <a href="#switches" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.switches')}</a>
+                                        <a href="#badges" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.badges')}</a>
+                                        <a href="#alerts" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.alerts')}</a>
+                                        <a href="#cards" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.cards')}</a>
                                     </div>
                                 )}
-                                
+
                                 <div className="mt-8 pt-4 border-t border-slate-100">
                                     <p className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-4 px-2">{t('sidebar.ownerSeries')}</p>
-                                    <a href="#dialogs" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Dialogs</a>
-                                    <a href="#tabs" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Tabs</a>
-                                    <a href="#accordions" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">Accordions</a>
+                                    <a href="#dialogs" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.dialogs')}</a>
+                                    <a href="#tabs" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.tabs')}</a>
+                                    <a href="#accordions" className="block px-3 py-2 rounded-md hover:bg-slate-50 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer">{t('sidebar.accordions')}</a>
                                 </div>
                             </nav>
                         </div>
 
                         {/* Sidebar Bottom Section */}
                         <div className="p-4 border-t border-slate-100 bg-white space-y-1 relative z-20">
-                            <button 
+                            <button
                                 onClick={() => setIsLangOpen(true)}
                                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-slate-600 hover:bg-blue-50 hover:text-blue-600 group cursor-pointer"
                             >
@@ -116,7 +211,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                                 </span>
                             </button>
 
-                            <button 
+                            <button
                                 onClick={() => setIsLogoutOpen(true)}
                                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-slate-600 hover:bg-red-50 hover:text-red-600 group cursor-pointer"
                             >
@@ -133,19 +228,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                     </main>
                 </div>
 
-                {/* Float Action Button */}
-                <button className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-br from-[#2b7fff] to-[#db2777] rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all z-40">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14" />
-                        <path d="M12 5v14" />
-                    </svg>
-                </button>
-
                 {/* Modals for Sidebar Actions */}
                 {isLangOpen && (
-                    <zap-dialog 
-                        id="lang-modal" 
-                        title={t('sidebar.language')} 
+                    <zap-dialog
+                        id="lang-modal"
+                        title={t('sidebar.language')}
                         description=""
                         open=""
                     >
@@ -157,11 +244,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                                 <button
                                     key={lang.code}
                                     onClick={() => handleLanguageChange(lang.code)}
-                                    className={`w-full flex items-center justify-between px-4 py-4 rounded-xl transition-all border cursor-pointer ${
-                                        language === lang.code 
-                                        ? 'bg-blue-50 border-blue-200 text-blue-600' 
-                                        : 'bg-white border-slate-100 text-slate-600 hover:bg-slate-50'
-                                    }`}
+                                    className={`w-full flex items-center justify-between px-4 py-4 rounded-xl transition-all border cursor-pointer ${language === lang.code
+                                            ? 'bg-blue-50 border-blue-200 text-blue-600'
+                                            : 'bg-white border-slate-100 text-slate-600 hover:bg-slate-50'
+                                        }`}
                                 >
                                     <div className="flex items-center gap-4">
                                         <span className="text-2xl">{lang.flag}</span>
@@ -178,10 +264,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 )}
 
                 {isLogoutOpen && (
-                    <zap-dialog 
-                        id="logout-modal" 
-                        title={t('auth.logout.title')} 
-                        description={t('auth.logout.confirm')}
+                    <zap-dialog
+                        id="logout-modal"
+                        title={t('auth.logout_title')}
+                        description={t('auth.logout_confirm')}
                         open=""
                     >
                         <div slot="footer" className="flex gap-3 justify-end w-full">

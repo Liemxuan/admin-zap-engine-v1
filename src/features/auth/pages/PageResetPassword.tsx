@@ -5,10 +5,16 @@ import { ResetPasswordForm } from '../components/ResetPasswordForm';
 import { LanguageSelector } from '../components/LanguageSelector';
 
 export const PageResetPassword: React.FC = () => {
-    const { t, language } = useLanguage();
+    const { t, language, isChangingLanguage } = useLanguage();
 
     return (
         <div className="min-h-screen w-full flex bg-white font-sans overflow-hidden">
+            {isChangingLanguage && (
+                <div className="fixed inset-0 z-[9999] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center animate-in fade-in duration-300">
+                    <div className="w-12 h-12 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin mb-4" />
+                    <p className="text-sm font-bold text-slate-600 animate-pulse">{t('common.loading')}...</p>
+                </div>
+            )}
             {/* Left Column: Hero - Hidden on Mobile */}
             <div className="hidden lg:flex w-1/2 relative overflow-hidden group">
                 <img
@@ -20,10 +26,10 @@ export const PageResetPassword: React.FC = () => {
                 
                 <div className="absolute bottom-20 left-16 right-16 text-white max-w-lg animate-in fade-in slide-in-from-bottom-8 duration-700">
                     <h1 className="text-5xl font-black mb-6 leading-tight tracking-tight drop-shadow-sm">
-                        {t('auth.hero.title')}
+                        {t('auth.hero_title')}
                     </h1>
                     <p className="text-xl text-slate-100/90 leading-relaxed font-medium">
-                        {t('auth.hero.subtitle')}
+                        {t('auth.hero_subtitle')}
                     </p>
                 </div>
             </div>
@@ -48,10 +54,10 @@ export const PageResetPassword: React.FC = () => {
                     <div className="max-w-[420px] w-full mx-auto">
                         <div className="mb-10 text-left">
                             <h2 className="text-3xl font-black text-slate-900 mb-3 tracking-tight">
-                                {t('auth.resetPassword.title')}
+                                {t('auth.resetPassword_title')}
                             </h2>
                             <p className="text-slate-500 text-base font-medium">
-                                {t('auth.resetPassword.subtitle')}
+                                {t('auth.resetPassword_subtitle')}
                             </p>
                         </div>
 
@@ -64,7 +70,7 @@ export const PageResetPassword: React.FC = () => {
                                 className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-all group"
                             >
                                 <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                                {t('auth.forgotPassword.backToLogin')}
+                                {t('auth.forgotPassword_backToLogin')}
                             </Link>
                         </div>
                     </div>

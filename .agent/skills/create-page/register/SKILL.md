@@ -1,69 +1,55 @@
----
+﻿---
 name: create-register-page
-description: Hướng dẫn chi tiết cách tạo và triển khai trang Đăng ký (Register) cho hệ thống ZAP Design Engine, tuân thủ kiến trúc DDD và các tiêu chuẩn UI/UX của dự án.
+description: Detailed guide for creating and implementing the Register page for ZAP Design Engine, following DDD architecture and project UI/UX standards.
 ---
 
+## Feature Structure (DDD)
 
-## 🏗 Cấu trúc Feature (DDD)
+The Register page is in the auth feature:
+- features/auth/pages/PageRegister.tsx: Main page container.
+- features/auth/components/RegisterForm.tsx: Component containing the form and UI validation logic.
+- features/auth/hooks/useRegister.ts: Hook managing registration logic, auto-login, and navigation.
+- features/auth/services/auth.service.ts: Contains the Auth/register-merchant API call method.
+- features/auth/types/auth.types.ts: Defines RegisterRequest and RegisterResponse interfaces.
 
-Trang Register nằm trong feature `auth`:
-- `features/auth/pages/PageRegister.tsx`: Container chính của trang.
-- `features/auth/components/RegisterForm.tsx`: Component chứa form và logic validation UI.
-- `features/auth/hooks/useRegister.ts`: Hook quản lý logic đăng ký, tự động đăng nhập và điều hướng.
-- `features/auth/services/auth.service.ts`: Chứa phương thức call API `Auth/register-merchant`.
-- `features/auth/types/auth.types.ts`: Định nghĩa Interface `RegisterRequest` và `RegisterResponse`.
-
-## 🛠 Thông số kỹ thuật
+## Technical Specifications
 
 ### 1. Data Model (Request)
-```typescript
-export interface RegisterRequest {
-    MerchantName: string; // Tên định danh doanh nghiệp
-    Email: string;        // Email liên hệ
-    Username: string;     // Tên đăng nhập
-    Password: string;     // Mật khẩu
-    Provider: string;     // Mặc định là 'Email'
-}
-```
+RegisterRequest interface fields:
+- MerchantName: string - Business identifier name
+- Email: string - Contact email
+- Username: string - Login username
+- Password: string - Password
+- Provider: string - Default is Email
 
-### 2. Quy tắc Validation (Client-side)
-- **Doanh nghiệp (MerchantName)**: Chỉ chấp nhận chữ cái thường (a-z), số (0-9) và dấu gạch ngang (-). Tự động sanitize khi nhập.
-- **Email**: Phải đúng định dạng email chuẩn.
-- **Username**: Bắt buộc nhập.
-- **Password**: Tối thiểu 6 ký tự.
-- **Xác nhận mật khẩu**: Phải khớp chính xác với Password.
+### 2. Validation Rules (Client-side)
+- **Business (MerchantName)**: Only accepts lowercase letters (a-z), digits (0-9), and hyphens (-). Auto-sanitize on input.
+- **Email**: Must be a valid email format.
+- **Username**: Required.
+- **Password**: Minimum 6 characters.
+- **Confirm password**: Must exactly match Password.
 
-### 3. Trải nghiệm người dùng (UX)
-- **Focus Management**: Khi có lỗi validation, hệ thống phải tự động `focus()` vào ô nhập liệu đầu tiên bị lỗi thông qua `useRef`.
-- **Thông báo lỗi**: Hiển thị thông báo lỗi chi tiết bên dưới form (sử dụng các key từ `locales`).
-- **Web Components Compatibility**: Sử dụng `useEffect` để lắng nghe sự kiện `input` trực tiếp từ các Custom Elements (`zap-input`) để đảm bảo đồng bộ dữ liệu với React state.
+### 3. User Experience (UX)
+- **Focus Management**: On validation error, the system must automatically focus() on the first failing input via useRef.
+- **Error Messages**: Display detailed error messages below the form (using keys from locales).
+- **Web Components Compatibility**: Use useEffect to listen to input events directly from Custom Elements (zap-input) to ensure data sync with React state.
 
-## 🚀 Luồng xử lý thành công (Happy Path)
+## Success Flow (Happy Path)
 
-Sau khi gọi API đăng ký thành công:
-1. **Tự động đăng nhập (Auto Login)**: Hệ thống sử dụng `Email` và `Password` vừa đăng ký để gọi tiếp API `login`.
-2. **Lưu Token**: Nếu login thành công, lưu `accessToken`, `refreshToken`, `merchantName` vào `localStorage`.
-3. **Điều hướng**: Chuyển thẳng người dùng về trang `/${language}/dashboard`.
-4. **Fallback**: Nếu tự động đăng nhập thất bại, điều hướng về trang Login đi kèm tham số URL (`?m=...&u=...`) để điền sẵn dữ liệu cho người dùng.
+After a successful registration API call:
+1. **Auto Login**: The system uses the registered Email and Password to call the login API.
+2. **Save Token**: If login succeeds, save accessToken, refreshToken, merchantName to localStorage.
+3. **Navigate**: Redirect the user directly to //dashboard.
+4. **Fallback**: If auto-login fails, redirect to the Login page with URL parameters (?m=...&u=...) to pre-fill the user data.
 
-## 🌐 Localization (i18n)
+## Localization (i18n)
 
-Sử dụng các key trong `src/shared/locales/{lang}/auth.ts`:
-- `auth.register.title`: Tiêu đề trang.
-- `auth.register.merchantAccount`: Nhãn "Doanh nghiệp".
-- `auth.register.error_password_length`: Lỗi độ dài mật khẩu.
-- ... và các key validation error tương ứng.
+Use keys from src/shared/locales/{lang}/auth.ts:
+- auth.register.title: Page title.
+- auth.register.merchantAccount: Label for Business.
+- auth.register.error_password_length: Password length error.
+- ... and corresponding validation error keys.
 
-## 📝 Ví dụ triển khai Form
+## Form Implementation Example
 
-Sử dụng trực tiếp các ZAP Web Components:
-```tsx
-<zap-input
-    ref={merchantRef}
-    label={t('auth.register.merchantAccount')}
-    value={formData.MerchantName}
-    icon-start="building-2"
-    fullwidth
-></zap-input>
-// ... tương tự cho các field khác
-```
+Use ZAP Web Components directly. For each field, use zap-input with ref, label (via t()), value, icon-start, and fullwidth attributes.

@@ -1,27 +1,27 @@
-# Quy định phát triển tính năng Đăng ký (Register)
+# Register Feature Development Rules
 
-Tài liệu này định nghĩa các quy tắc và tiêu chuẩn khi phát triển hoặc chỉnh sửa tính năng Đăng ký trong hệ thống ZAP Design Engine.
+This document defines the rules and standards when developing or modifying the Register feature in ZAP Design Engine.
 
-## 1. Kiến trúc thư mục (DDD)
-Mọi code liên quan đến Đăng ký phải nằm trong module `features/auth`:
+## 1. Folder Architecture (DDD)
+All Register-related code must reside in the `features/auth` module:
 - **Components**: `src/features/auth/components/RegisterForm.tsx`
 - **Pages**: `src/features/auth/pages/PageRegister.tsx`
 - **Services**: `src/features/auth/services/auth.service.ts`
 - **Types**: `src/features/auth/types/auth.types.ts`
 - **Locales**: `src/shared/locales/{lang}/auth.ts`
 
-## 2. Quy tắc giao tiếp API
-- Sử dụng `authService.register` để gọi API.
-- Endpoint phải được định nghĩa trong `src/shared/constants/storage.ts`.
-- Mặc định sử dụng phương thức `POST`.
-- Body request phải tuân thủ interface `RegisterRequest`.
+## 2. API Communication Rules
+- Use `authService.register` to call the API.
+- The endpoint must be defined in `src/shared/constants/storage.ts`.
+- Default HTTP method: `POST`.
+- Request body must conform to the `RegisterRequest` interface.
 
-## 3. Quy tắc giao diện (UI/UX)
-- Sử dụng các Web Components của hệ thống ZAP: `<zap-input>`, `<zap-button>`, `<zap-checkbox>`.
-- Phải hỗ trợ đa ngôn ngữ (i18n) thông qua `useLanguage`.
-- Hiển thị thông báo lỗi rõ ràng khi API trả về lỗi hoặc validate không pass.
+## 3. UI/UX Rules
+- Use ZAP system Web Components: `<zap-input>`, `<zap-button>`, `<zap-checkbox>`.
+- Must support multi-language (i18n) via `useLanguage`.
+- Display clear error messages when the API returns an error or validation fails.
 
-## 4. Xử lý sự kiện và Form
-- Phải lắng nghe sự kiện `input` từ các custom elements để cập nhật state.
-- Phải hỗ trợ gửi form bằng phím **Enter**.
-- Sau khi đăng ký thành công, tự động chuyển hướng về trang Đăng nhập kèm theo các tham số cần thiết (ví dụ: `m` cho MerchantName).
+## 4. Event Handling & Form
+- Must listen to `input` events from custom elements to update state.
+- Must support form submission via the **Enter** key.
+- After successful registration, auto-redirect to the Login page with the necessary parameters (e.g. `m` for MerchantName).

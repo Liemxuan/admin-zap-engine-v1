@@ -1,109 +1,101 @@
----
+﻿---
 name: create-page
-description: Hướng dẫn tạo trang và phát triển tính năng theo kiến trúc Domain-Driven Design (DDD) của ZAP Design Engine.
+description: Guide for creating pages and developing features following the Domain-Driven Design (DDD) architecture of ZAP Design Engine.
 ---
 
-# ZAP Design Engine – Kiến Trúc Hệ Thống & Hướng Dẫn Tạo Trang
+# ZAP Design Engine - System Architecture & Page Creation Guide
 
-Tài liệu này định nghĩa tiêu chuẩn xây dựng ứng dụng ZAP Design Engine, tập trung vào tính mô-đun, dễ mở rộng và tách biệt trách nhiệm (Separation of Concerns).
+This document defines the standards for building the ZAP Design Engine application, focusing on modularity, scalability, and Separation of Concerns.
 
-## 1. Cấu Trúc Thư Mục Chuẩn (Project Structure)
+## 1. Standard Project Structure
 
-```text
 src/
-├── app/                # 🧠 TẦNG KHỞI TẠO: Cấu hình toàn hệ thống
-│   ├── router/         # Định nghĩa routes (PrivateRoute, PermissionRoute, Lazy loading)
-│   ├── providers/      # AuthProvider, ThemeProvider, QueryClientProvider...
-│   └── layouts/        # Layout templates (MainLayout, AuthLayout, BlankLayout)
-│
-├── features/           # 🚀 TẦNG NGHIỆP VỤ: Chia theo tên miền (Domain)
-│   ├── auth/           # Đăng nhập, đăng ký, quên mật khẩu
-│   ├── dashboard/      # Tổng quan hệ thống
-│   ├── product/        # Quản lý sản phẩm
-│   ├── order/          # Quản lý đơn hàng
-│   ├── customer/       # Quản lý khách hàng
-│   ├── inventory/      # Quản lý kho
-│   └── report/         # Báo cáo thống kê
-│
-├── shared/             # 🛠️ TẦNG DÙNG CHUNG: Các tài nguyên tái sử dụng
-│   ├── components/     # UI Kits (Button, Input, Modal, Table...)
-│   ├── services/       # Base API Client (Axios), Helpers
-│   ├── hooks/          # Hooks dùng chung (useDebounce, useLocalStorage...)
-│   ├── utils/          # Công cụ xử lý dữ liệu (format date, currency...)
-│   ├── constants/      # Enums, config keys, static strings
-│   └── types/          # Global interfaces/types
-│
-├── assets/             # Images, Global Fonts
-├── styles/             # Global CSS, Design Tokens
-└── App.tsx             # Entry point lắp ráp Providers & Router
-```
+  app/                - INITIALIZATION LAYER: System-wide configuration
+    router/           - Route definitions (PrivateRoute, PermissionRoute, Lazy loading)
+    providers/        - AuthProvider, ThemeProvider, QueryClientProvider...
+    layouts/          - Layout templates (MainLayout, AuthLayout, BlankLayout)
+
+  features/           - BUSINESS LAYER: Divided by Domain
+    auth/             - Login, register, forgot password
+    dashboard/        - System overview
+    product/          - Product management
+    order/            - Order management
+    customer/         - Customer management
+    inventory/        - Inventory management
+    report/           - Reports & statistics
+
+  shared/             - SHARED LAYER: Reusable resources
+    components/       - UI Kits (Button, Input, Modal, Table...)
+    services/         - Base API Client (Axios), Helpers
+    hooks/            - Shared hooks (useDebounce, useLocalStorage...)
+    utils/            - Data processing utilities (format date, currency...)
+    constants/        - Enums, config keys, static strings
+    types/            - Global interfaces/types
+
+  assets/             - Images, Global Fonts
+  styles/             - Global CSS, Design Tokens
+  App.tsx             - Entry point assembling Providers & Router
 
 ---
 
-## 2. Chi Tiết Tầng Khởi Tạo (`src/app/`)
+## 2. Initialization Layer Details (src/app/)
 
-Đây là "bộ não" điều khiển cách ứng dụng vận hành. Khi tạo một trang mới, bạn thường xuyên tương tác với tầng này để đăng ký Route và Layout.
+This is the brain controlling how the application operates. When creating a new page, you frequently interact with this layer to register Routes and Layouts.
 
-### 📂 app/router/
-- **PrivateRoute.tsx**: Bảo vệ các trang yêu cầu đăng nhập.
-- **PermissionRoute.tsx**: Kiểm tra quyền truy cập (RBAC) trước khi render trang.
-- **index.tsx**: Sử dụng `React.lazy` để tối ưu hóa hiệu năng (Code Splitting).
+### app/router/
+- PrivateRoute.tsx: Protects pages that require authentication.
+- PermissionRoute.tsx: Checks access permissions (RBAC) before rendering a page.
+- index.tsx: Uses React.lazy to optimize performance (Code Splitting).
 
-### 📂 app/layouts/
-- **MainLayout.tsx**: Chứa Sidebar + Header + Breadcrumb. Dùng cho các trang quản trị.
-- **AuthLayout.tsx**: Dùng cho Login/Register (thường có background ảnh và form ở giữa).
-- **BlankLayout.tsx**: Trang trắng, dùng cho in ấn hoặc các trang đặc biệt.
+### app/layouts/
+- MainLayout.tsx: Contains Sidebar + Header + Breadcrumb. Used for admin pages.
+- AuthLayout.tsx: Used for Login/Register (typically has a background image with a centered form).
+- BlankLayout.tsx: Blank page, used for printing or special pages.
 
 ---
 
-## 3. Cấu Trúc Một Feature (`src/features/`)
+## 3. Feature Structure (src/features/)
 
-Mỗi Feature là một module độc lập, tuân thủ cấu trúc nội bộ:
+Each Feature is an independent module following an internal structure:
 
-```text
 src/features/[feature-name]/
- ├── pages/           # LAYOUT: Gọi component & hook để lắp ráp trang hoàn chỉnh.
- ├── components/      # UI & FORM LOGIC: Xử lý tương tác, Validation (LoginForm.tsx).
- ├── hooks/           # FLOW: Quản lý loading/error, gọi services, điều phối dữ liệu.
- ├── services/        # API: Các hàm gọi API cụ thể cho feature này.
- ├── types/           # MODEL: Định nghĩa Request/Response interfaces.
- └── index.ts         # PUBLIC API: Chỉ export những gì bên ngoài cần dùng.
-```
+  pages/           - LAYOUT: Calls components & hooks to assemble a complete page.
+  components/      - UI & FORM LOGIC: Handles interactions, Validation (LoginForm.tsx).
+  hooks/           - FLOW: Manages loading/error, calls services, coordinates data.
+  services/        - API: Feature-specific API call functions.
+  types/           - MODEL: Defines Request/Response interfaces.
+  index.ts         - PUBLIC API: Only exports what external modules need.
 
 ---
 
-## 4. Quy Trình Tạo Trang Mới (6 Bước Chuẩn)
+## 4. New Page Creation Process (6 Standard Steps)
 
-### Bước 1: Xác định Feature Domain
-Nếu trang thuộc về phân hệ sẵn có (VD: Dashboard), hãy tạo thư mục trong đó. Nếu là phân hệ mới, tạo thư mục feature mới.
+### Step 1: Identify the Feature Domain
+If the page belongs to an existing subsystem (e.g. Dashboard), create it inside that directory. If it is a new subsystem, create a new feature directory.
 
-### Bước 2: Định nghĩa Model (`types/`)
-Xác định cấu trúc dữ liệu trả về từ API.
-```typescript
-export interface Product { id: string; name: string; price: number; }
-```
+### Step 2: Define the Model (types/)
+Define the data structure returned from the API.
+Example: export interface Product { id: string; name: string; price: number; }
 
-### Bước 3: Viết API Service (`services/`)
-Tạo các hàm fetch/post dữ liệu.
-```typescript
-export const getProducts = () => axiosClient.get('/products');
-```
+### Step 3: Write the API Service (services/)
+Create functions to fetch/post data.
+Example: export const getProducts = () => axiosClient.get(''/products'');
 
-### Bước 4: Viết Hook Nghiệp Vụ (`hooks/`)
-Xử lý logic lấy dữ liệu, phân trang, lọc (Sử dụng `react-query` nếu có).
+### Step 4: Write the Business Logic Hook (hooks/)
+Handle data fetching logic, pagination, filtering (use react-query if available).
 
-### Bước 5: Thiết Kế UI & Component (`components/` & `pages/`)
-- Tạo các `components` nội bộ để xử lý logic phức tạp.
-- Lắp ráp tại `pages`.
+### Step 5: Design UI & Components (components/ & pages/)
+- Create internal components to handle complex logic.
+- Assemble them in pages.
 
-### Bước 6: Đăng ký Route (`src/app/router/`)
-Thêm trang vào danh sách routes, chọn Layout và phân quyền phù hợp.
+### Step 6: Register the Route (src/app/router/)
+Add the page to the routes list, select an appropriate Layout and permissions.
 
 ---
 
-## 5. Quy Tắc Vàng (Golden Rules)
+## 5. Golden Rules
 
-1. **Don't Repeat Yourself (DRY)**: Nếu một component được dùng ở 2 features khác nhau, hãy chuyển nó vào `shared/components/`.
-2. **Lean Pages**: File trong `pages/` không nên chứa logic xử lý dữ liệu phức tạp. Logic đó thuộc về `hooks/`.
-3. **Strict Typing**: Không sử dụng `any`. Luôn định nghĩa Interface/Type rõ ràng.
-4. **Lazy Loading**: Luôn import các Pages bằng `lazy()` để tăng tốc độ tải trang đầu tiên.
+1. **Don''t Repeat Yourself (DRY)**: If a component is used across 2 different features, move it to shared/components/.
+2. **Lean Pages**: Files in pages/ should not contain complex data processing logic. That belongs in hooks/.
+3. **Strict Typing**: Never use any. Always define clear Interfaces/Types.
+4. **Lazy Loading**: Always import Pages using lazy() to improve initial load performance.

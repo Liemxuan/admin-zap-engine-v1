@@ -5,6 +5,7 @@ import { STORAGE_KEYS } from '../constants';
 
 interface LanguageContextType {
     language: Language;
+    isChangingLanguage: boolean;
     setLanguage: (lang: Language) => void;
     t: (key: TranslationKeys) => string;
 }
@@ -16,10 +17,18 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         const saved = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
         return (saved === 'vi' || saved === 'en') ? saved as Language : 'vi';
     });
+    const [isChangingLanguage, setIsChangingLanguage] = useState(false);
 
     const setLanguage = (lang: Language) => {
-        setLanguageState(lang);
-        localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
+        if (lang === language) return;
+        
+        setIsChangingLanguage(true);
+        // Delay 2s to create a smooth transition as requested
+        setTimeout(() => {
+            setLanguageState(lang);
+            localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
+            setIsChangingLanguage(false);
+        }, 2000); // Using 2000ms as requested by the user.
     };
 
     const t = (key: string): string => {
@@ -38,7 +47,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     };
 
     return (
-        <LanguageContext.Provider value={{ language, setLanguage, t }}>
+        <LanguageContext.Provider value={{ language, isChangingLanguage, setLanguage, t }}>
             {children}
         </LanguageContext.Provider>
     );

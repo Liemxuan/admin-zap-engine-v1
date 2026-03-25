@@ -1,16 +1,16 @@
-# Quy trình phát triển tính năng Đặt lại mật khẩu
+# Reset Password Feature Development Workflow
 
 ---
-description: Quy trình hoàn thiện luồng Reset Password từ link email
+description: Workflow for completing the Reset Password flow from email link
 ---
 
 ## 1. Extract Token
-- Sử dụng `URLSearchParams` để lấy token từ `location.search`.
+- Use `URLSearchParams` to get the token from `location.search`.
 
 ## 2. API Submission
-- Gửi yêu cầu với body gồm token và mật khẩu mới.
-- Đảm bảo dùng đúng phương thức `POST`.
+- Send request with body containing token and new password.
+- Ensure the correct `POST` method is used.
 
 ## 3. Feedback Loop
-- Hiển thị thông báo thành công.
-- Tự động chuyển hướng người dùng về trang đăng nhập để họ tiếp tục sử dụng hệ thống.
+- Display a success message.
+- Auto-redirect the user to the Login page so they can continue using the system.

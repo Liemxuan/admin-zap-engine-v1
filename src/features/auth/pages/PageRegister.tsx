@@ -5,10 +5,16 @@ import { LanguageSelector } from '../components/LanguageSelector';
 import { useLanguage } from '../../../shared/contexts/LanguageContext';
 
 export const PageRegister: React.FC = () => {
-    const { t } = useLanguage();
+    const { t, isChangingLanguage } = useLanguage();
 
     return (
         <div className="min-h-screen w-full flex bg-[#f8fafc] dark:bg-slate-950 font-sans overflow-hidden transition-colors duration-300">
+            {isChangingLanguage && (
+                <div className="fixed inset-0 z-[9999] bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center animate-in fade-in duration-300">
+                    <div className="w-12 h-12 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin mb-4" />
+                    <p className="text-sm font-bold text-slate-600 dark:text-slate-400 animate-pulse">{t('common.loading')}...</p>
+                </div>
+            )}
             {/* Left Column: Hero - Hidden on Mobile */}
             <div className="hidden lg:flex w-1/2 relative overflow-hidden group">
                 <img
@@ -20,10 +26,10 @@ export const PageRegister: React.FC = () => {
                 
                 <div className="absolute bottom-20 left-16 right-16 text-white max-w-lg animate-in fade-in slide-in-from-bottom-8 duration-700">
                     <h1 className="text-5xl font-black mb-6 leading-tight tracking-tight drop-shadow-sm">
-                        {t('auth.hero.title')}
+                        {t('auth.hero_title')}
                     </h1>
                     <p className="text-xl text-slate-100/90 leading-relaxed font-medium">
-                        {t('auth.hero.subtitle')}
+                        {t('auth.hero_subtitle')}
                     </p>
                 </div>
             </div>

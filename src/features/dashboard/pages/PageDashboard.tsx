@@ -1,13 +1,16 @@
 import React from 'react';
 import { MainLayout } from '../../../app/layouts/MainLayout.tsx';
+import { useLanguage } from '../../../shared/contexts/LanguageContext';
 
 /**
  * PageDashboard renders the full content from dist/index.html (Component Showcase)
  * 100% HTML converted to JSX format.
  */
 export const PageDashboard: React.FC = () => {
+    const { t } = useLanguage();
+
     return (
-        <MainLayout>
+        <MainLayout title={t('sidebar.dashboard')}>
             <div className="p-6 md:p-12">
                 <div className="max-w-full mx-auto space-y-24">
                     {/* Hero */}

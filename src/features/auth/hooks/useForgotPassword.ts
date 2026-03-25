@@ -54,12 +54,12 @@ export const useForgotPassword = () => {
     const handleSendEmail = async () => {
         setError(null);
         if (!email) {
-            setError(t('auth.forgotPassword.error_email_required'));
+            setError(t('auth.forgotPassword_error_email_required'));
             emailRef.current?.focus();
             return;
         }
         if (!validateEmail(email)) {
-            setError(t('auth.register.error_email_invalid'));
+            setError(t('auth.register_error_email_invalid'));
             emailRef.current?.focus();
             return;
         }
@@ -102,7 +102,7 @@ export const useForgotPassword = () => {
     const handleVerifyOtp = async () => {
         setError(null);
         if (otp.length < 6) {
-            setError(t('auth.register.error_otp_required'));
+            setError(t('auth.register_error_otp_required'));
             return;
         }
 
@@ -132,12 +132,12 @@ export const useForgotPassword = () => {
     const handleResetPassword = async () => {
         setError(null);
         if (!password) {
-            setError(t('auth.register.error_password_required'));
+            setError(t('auth.register_error_password_required'));
             passwordRef.current?.focus();
             return;
         }
         if (password !== confirmPassword) {
-            setError(t('auth.register.error_password_match'));
+            setError(t('auth.register_error_password_match'));
             confirmRef.current?.focus();
             return;
         }

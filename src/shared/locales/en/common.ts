@@ -1,4 +1,9 @@
 export const common = {
+    id: 'ID',
+    code: 'Code',
+    selectLanguage: 'Select language',
+    lightMode: 'Light mode',
+    darkMode: 'Dark mode',
     save: 'Save',
     cancel: 'Cancel',
     edit: 'Edit',
@@ -11,5 +16,17 @@ export const common = {
     showing: 'Showing',
     of: 'of',
     actions: 'Actions',
-    view: 'View'
+    view: 'View',
+    records: 'records',
+    notFound: 'No records found',
+    deselectAll: 'Deselect all',
+    selectAll: 'Select all',
+    previous: 'Previous',
+    next: 'Next',
+    filter: 'Filter',
+    filterBy: 'Filter by',
+    all: 'All',
+    reset: 'Reset',
+    apply: 'Apply',
+    any: 'Any'
 };
